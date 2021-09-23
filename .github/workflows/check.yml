@@ -19,3 +19,5 @@ jobs:
       run: make DEBUG=1
     - name: make check
       run: make check
+    - name: upload coverage
+      run: bash <(curl -s https://codecov.io/bash)
