@@ -12,7 +12,7 @@ typedef struct bt_node
 } bt_node;
 
 struct bt_bintree {
-    bt_node *root;    
+    bt_node *root;
 };
 
 int _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
@@ -31,7 +31,7 @@ int _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
     n->right = NULL;
 
     // copy over key string
-    keylen = strlen(key); 
+    keylen = strlen(key);
     n->key = malloc(keylen + 1); // Extra byte for null terminator
     if (!n->key) return FAILURE; // TODO: this will leak memory
     strncpy(n->key, key, keylen + 1);
@@ -82,7 +82,7 @@ int bt_size(BinTree *tree) {
 }
 
 int _bt_add(bt_node *node, char *key, void *data, size_t size) {
-    int cmp;
+    int cmp; // Comparison between node key and target key
 
     // Check params
     if (!node || !key || !data) return FAILURE;
@@ -141,7 +141,7 @@ void* _bt_get(bt_node *node, char *key) {
         // Entry found, return data
         return node->data;
     } else if (cmp > 0) {
-        // node key > target key, go left 
+        // node key > target key, go left
         return _bt_get(node->left, key);
     } else {
         // node key < target key, go right

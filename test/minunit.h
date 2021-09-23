@@ -19,7 +19,7 @@
 
 #define mu_run_test(test)                                                      \
   do {                                                                         \
-    printf("Running %s: ", #test);                                             \
+    printf("Running %s:\t", #test);                                             \
     char *message = test();                                                    \
     tests_run++;                                                               \
     if (message) {                                                             \
