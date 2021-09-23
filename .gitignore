@@ -8,6 +8,11 @@ bst
 *.tmp
 *.log
 
+# Test logs, results, and coverage
+*.gcov
+*.gcda
+*.gcno
+
 # Editor files
 .vscode
 *.swp
