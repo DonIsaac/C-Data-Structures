@@ -15,9 +15,10 @@ all: $(TARGETS)
 
 # ================================== TESTING ===================================
 
-.PHONY: *.report
+.PHONY: *.report check
 
-# bst.report: test/bst.o bintree.o
+check: bst.report
+
 bst.report: bst
 	./bst
 	gcov -a -c -f test/bst.c src/map/bintree.o
