@@ -1,0 +1,6 @@
+-Wall
+-Wextra
+-Wconversion
+-pedantic
+-Iincludes
+-std=c99

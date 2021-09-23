@@ -1,0 +1,14 @@
+# Build artifacts
+*.o
+
+# Binaries
+bst
+
+# Temporary files
+*.tmp
+*.log
+
+# Editor files
+.vscode
+*.swp
+*.swo
