@@ -8,10 +8,12 @@ FOLDERS = ./ src/ src/map/ test/
 
 ifdef DEBUG
 	CFLAGS += -DDEBUG -ggdb -fprofile-arcs -ftest-coverage
+else ifdef PROD
+	CFLAGS += -O1 -DNDEBUG
 endif
 
 .PHONY: all
-all: $(TARGETS)
+all: $(TARGETS) docs
 
 # ================================== TESTING ===================================
 
@@ -20,8 +22,9 @@ all: $(TARGETS)
 check: bst.report
 
 bst.report: bst
-	valgrind ./bst
-	gcov -a -c -f test/bst.c src/map/bintree.o
+	valgrind --leak-check=full ./bst
+	gcov --all-blocks --branch-counts test/bst.c src/map/bintree.c
+
 # %.report: %
 # 	gcov test/$<.c
 bst: test/bst.o src/map/bintree.o

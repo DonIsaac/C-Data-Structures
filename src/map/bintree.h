@@ -36,11 +36,15 @@
  * and deletion will cause entries to be freed. Because of this, storing data
  * pointers long-term is ill-advised. Prefer entry retrieval (`bt_get`) over
  * pointer storage.
+ *
+ * @ingroup bt
  */
 typedef struct bt_bintree BinTree;
 
 /**
  * @brief Constructs a new BinTree.
+ *
+ * @ingroup bt
  *
  * @param tree A pointer to the tree to construct.
  *
@@ -53,16 +57,19 @@ int bt_init(BinTree **tree);
  *
  * After destruction, the BinTree will be set to `NULL`.
  *
- * @param tree A pointer to the tree to destroy.
+ * @ingroup bt
  *
- * @return int 1 on success, 0 on failure.
+ * @param tree A pointer to the tree to destroy.
  */
-int bt_free(BinTree **tree);
+void bt_free(BinTree **tree);
 
 /**
  * @brief Calculates the height of a BinTree.
  *
+ * @ingroup bt
+ *
  * @param tree The target tree.
+ *
  * @return int The height of the tree, or 0 on failure. Check `errno` to
  * distinguish between a tree with a height of `0` and failures.
  */
@@ -70,6 +77,8 @@ int bt_height(BinTree *tree);
 
 /**
  * @brief Gets the number of key/value entries in a BinTree.
+ *
+ * @ingroup bt
  *
  * @param tree The target tree.
  *
@@ -87,6 +96,8 @@ int bt_size(BinTree *tree);
  *
  * Both the entry key and data are copied over into the tree. As such, modifying
  * the original key or data after insertion will have no effect on the tree.
+ *
+ * @ingroup bt
  *
  * @param tree The BST to insert into.
  * @param key  The entry key.
@@ -107,6 +118,8 @@ int bt_add(BinTree *tree, char *key, void *data, size_t size);
  * store the pointer returned by this function for long-term use. Instead,
  * re-invoke this function when you need to access stored data.
  *
+ * @ingroup bt
+ *
  * @param tree The tree to search.
  * @param key The key the entry is stored under.
  *
@@ -122,6 +135,8 @@ void *bt_get(BinTree *tree, char *key);
 /**
  * @brief Checks if an entry exists under a specific search key in a BinTree.
  *
+ * @ingroup bt
+ *
  * @param tree The tree to search.
  * @param key  The entry key to check.
  *
@@ -131,6 +146,8 @@ int bt_has(BinTree *tree, char *key);
 
 /**
  * @brief Removes an entry from a BinTree, freeing its memory resources.
+ *
+ * @ingroup bt
  *
  * @param tree The tree to remove the entry from.
  * @param key  The entry key.

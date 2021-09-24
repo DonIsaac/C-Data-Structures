@@ -37,7 +37,7 @@ int _bt_num_children(bt_node *node) {
         return 2;
 }
 bool _bt_node_is_leaf(bt_node *node) {
-    return node->left == NULL && node->right == NULL;
+    return _bt_num_children(node) == 0;
 }
 
 bt_node *_bt_min(bt_node *node) {
@@ -89,20 +89,6 @@ int _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
     return SUCCESS;
 }
 
-int _bt_node_free(bt_node *node) {
-    // Node must point to a leaf node
-    assert(node);
-    // assert(node->left == NULL);
-    // assert(node->right == NULL);
-
-    // Free node memory resources
-    free(node->key);
-    free(node->data);
-    free(node);
-
-    return SUCCESS;
-}
-
 int bt_init(BinTree **tree) {
     BinTree *t = NULL;
 
@@ -114,6 +100,42 @@ int bt_init(BinTree **tree) {
     t->root = NULL;
 
     return SUCCESS;
+}
+
+void _bt_node_free(bt_node *node) {
+    // Node must point to a leaf node
+    assert(node);
+    // assert(node->left == NULL);
+    // assert(node->right == NULL);
+
+    // Free node memory resources
+    free(node->key);
+    free(node->data);
+    free(node);
+}
+
+void _bt_node_free_all(bt_node *node) {
+    // Base case
+    if (!node) return;
+
+    // Recursively free children
+    _bt_node_free_all(node->left);
+    _bt_node_free_all(node->right);
+
+    // Free current node
+    _bt_node_free(node);
+}
+
+void bt_free(BinTree **tree) {
+    if (!tree || !(*tree)) return;
+
+    // Free root if it exists
+    if ((*tree)->root) {
+        _bt_node_free_all((*tree)->root);
+    }
+
+    free(*tree);
+    *tree = NULL;
 }
 
 // ================================ HEIGHT/SIZE ================================

@@ -16,6 +16,10 @@ static char *test_bst_empty() {
     mu_assert("Empty tree's height is not 0.", bt_height(tree) == 0);
     mu_assert("Empty tree's size is not 0.", bt_size(tree) == 0);
 
+    bt_free(&tree);
+    mu_assert("After bt_free(), tree should be NULL.", tree == NULL);
+
+    bt_free(&tree);
     return 0;
 }
 
@@ -50,6 +54,7 @@ static char *test_bst_add_and_remove_1() {
     mu_assert("After removal, bt_get() should return NULL.", bt_get(tree, key) == NULL);
     mu_assert("After removal, bt_has() should return false.", !bt_has(tree, key));
 
+    bt_free(&tree);
     return 0;
 }
 
@@ -76,6 +81,7 @@ static char *test_bst_add_duplicate() {
     from_tree = bt_get(tree, key);
     mu_assert("After reinsertion, data should be most recent value", *from_tree == data2);
 
+    bt_free(&tree);
     return 0;
 }
 
@@ -106,6 +112,7 @@ static char *test_bst_add_4() {
     mu_assert("Did not get a value of 3 from entry under key 'd'.", *((int *)bt_get(tree, "d")) == data[2]);
     mu_assert("Did not get a value of 4 from entry under key 'b'.", *((int *)bt_get(tree, "b")) == data[3]);
 
+    bt_free(&tree);
     return 0;
 }
 
@@ -120,6 +127,7 @@ static char *test_bst_remove_empty() {
     mu_assert("When bt_remove is called on an empty tree, it should return 0", !ret);
     mu_assert("When bt_remove is called on an empty tree, it should have a size of 0", bt_size(tree) == 0);
 
+    bt_free(&tree);
     return 0;
 }
 
@@ -229,6 +237,7 @@ static char *tst_bst_remove_multiple() {
     mu_assert("Key 'f' is not in tree after removing 'a'.", bt_has(tree, f));
     mu_assert("Key 'h' is not in tree after removing 'a'.", bt_has(tree, h));
 
+    bt_free(&tree);
     return 0;
 }
 
