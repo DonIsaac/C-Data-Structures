@@ -1,19 +1,63 @@
 #include "bintree.h"
 
+#include <assert.h>
 #include <math.h>
-#include <sys/param.h>
+#include <stdbool.h>
 #include <string.h>
+#include <sys/param.h>
 
-typedef struct bt_node
-{
-    char *key;
-    void *data;
-    struct bt_node *left, *right;
+typedef struct bt_node {
+    char *key;             // entry lookup key
+    void *data;            // entry value
+    size_t size;           // size of data
+    struct bt_node *left,  // left child node
+        *right;            // right child node
 } bt_node;
 
 struct bt_bintree {
     bt_node *root;
 };
+
+// =============================== PRIVATE UTIL ================================
+
+int _bt_num_children(bt_node *node) {
+    assert(node);
+    // Both children are null, node is leaf
+    if (!node->left && !node->right)
+        return 0;
+
+    // Only left or right child is non-null
+    else if (
+        (node->left && !node->right) ||
+        (node->right && !node->left))
+        return 1;
+
+    // Neither children are null
+    else
+        return 2;
+}
+bool _bt_node_is_leaf(bt_node *node) {
+    return node->left == NULL && node->right == NULL;
+}
+
+bt_node *_bt_min(bt_node *node) {
+    if (!node) return NULL;
+
+    switch (_bt_num_children(node)) {
+        case 0:
+            return node;
+        case 1:
+            if (node->left) {
+                return _bt_min(node->left);
+            } else {
+                return node;
+            }
+        default:
+            return _bt_min(node->left);
+    }
+}
+
+// =============================== INIT/DESTROY  =================================
 
 int _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
     bt_node *n = NULL;
@@ -32,14 +76,29 @@ int _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
 
     // copy over key string
     keylen = strlen(key);
-    n->key = malloc(keylen + 1); // Extra byte for null terminator
-    if (!n->key) return FAILURE; // TODO: this will leak memory
+    n->key = malloc(keylen + 1);  // Extra byte for null terminator
+    if (!n->key) return FAILURE;  // TODO: this will leak memory
     strncpy(n->key, key, keylen + 1);
 
     // copy over entry data
+    n->size = size;
     n->data = malloc(size);
-    if (!n->data) return FAILURE; // TODO: this will leak memory
+    if (!n->data) return FAILURE;  // TODO: this will leak memory
     memcpy(n->data, data, size);
+
+    return SUCCESS;
+}
+
+int _bt_node_free(bt_node *node) {
+    // Node must point to a leaf node
+    assert(node);
+    // assert(node->left == NULL);
+    // assert(node->right == NULL);
+
+    // Free node memory resources
+    free(node->key);
+    free(node->data);
+    free(node);
 
     return SUCCESS;
 }
@@ -56,6 +115,8 @@ int bt_init(BinTree **tree) {
 
     return SUCCESS;
 }
+
+// ================================ HEIGHT/SIZE ================================
 
 int _bt_height(bt_node *node) {
     if (!node) return 0;
@@ -81,8 +142,10 @@ int bt_size(BinTree *tree) {
     return _bt_size(tree->root);
 }
 
+// ================================= INSERTION =================================
+
 int _bt_add(bt_node *node, char *key, void *data, size_t size) {
-    int cmp; // Comparison between node key and target key
+    int cmp;  // Comparison between node key and target key
 
     // Check params
     if (!node || !key || !data) return FAILURE;
@@ -94,6 +157,7 @@ int _bt_add(bt_node *node, char *key, void *data, size_t size) {
         node->data = malloc(size);
         if (!node->data) return FAILURE;
         memcpy(node->data, data, size);
+        node->size = size;
         return SUCCESS_REPLACED;
 
     } else if (cmp > 0) {
@@ -130,7 +194,9 @@ int bt_add(BinTree *tree, char *key, void *data, size_t size) {
     return _bt_add(tree->root, key, data, size);
 }
 
-void* _bt_get(bt_node *node, char *key) {
+// =================================== READ ====================================
+
+void *_bt_get(bt_node *node, char *key) {
     int cmp;
 
     if (!node || !key) return NULL;
@@ -149,9 +215,91 @@ void* _bt_get(bt_node *node, char *key) {
     }
 }
 
-void* bt_get(BinTree *tree, char *key) {
-    if (!tree || !key) return NULL; // Bad parameters
-    if (!tree->root) return NULL;   // Tree is empty
+void *bt_get(BinTree *tree, char *key) {
+    if (!tree || !key) return NULL;  // Bad parameters
+    if (!tree->root) return NULL;    // Tree is empty
 
     return _bt_get(tree->root, key);
+}
+
+int bt_has(BinTree *tree, char *key) {
+    if (!tree || !key) return false;  // Bad parameters
+
+    return _bt_get(tree->root, key) == NULL ? false : true;
+}
+
+// ================================= DELETION ==================================
+
+bt_node *_bt_remove(bt_node *node, char *key, int *status) {
+    int cmp;
+
+    assert(key);
+    assert(status);
+
+    // Base case: key not found.
+    if (!node) {
+        *status = 0;
+        return NULL;
+    }
+
+    cmp = strcmp(node->key, key);
+    if (!cmp) {  // Base case: entry found, delete current node
+        if (_bt_node_is_leaf(node)) {
+            *status = SUCCESS;
+            _bt_node_free(node);
+            return NULL;
+
+        } else if (  // Node only has 1 child;
+            (node->left && !node->right) ||
+            (node->right && !node->left)) {
+            bt_node *child = node->left ? node->left : node->right;  // Get child subtree
+            *status = SUCCESS;
+            _bt_node_free(node);
+            return child;
+
+        } else {  // Node has two children, replace self with right child's min node
+            bt_node *right_min = _bt_min(node->right);
+            assert(right_min);
+
+            // Replace node's key with right min's key
+            size_t keylen = strlen(right_min->key); // Free old key
+            free(node->key);
+            node->key = malloc(keylen + 1);
+            if (!node->key) return NULL; // TODO: What do here?
+            strncpy(node->key, right_min->key, keylen + 1); // Copy key to node
+
+            // Replace node's value with right min's value
+            free(node->data);                    // Free old data
+            node->size = right_min->size;
+            node->data = malloc(right_min->size);
+            if (!node->data) return NULL; // TODO: What do here?
+            memcpy(node->data, right_min->data, right_min->size); // Copy data to node
+
+            // Remove (now duplicate) min node from right subtree
+            node->right = _bt_remove(node->right, right_min->key, status);
+            *status = 1;
+
+            return node;
+        }
+
+    } else if (cmp > 0) {
+        // node key > target key, go left
+        node->left = _bt_remove(node->left, key, status);
+        return node;
+
+    } else {
+        // node key < target key, go right
+        node->right = _bt_remove(node->right, key, status);
+        return node;
+    }
+}
+
+int bt_remove(BinTree *tree, char *key) {
+    int status = FAILURE;
+
+    if (!tree || !key) return FAILURE;
+
+    tree->root = _bt_remove(tree->root, key, &status);
+
+    return status;
 }

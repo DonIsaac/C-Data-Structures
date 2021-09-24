@@ -20,7 +20,7 @@ all: $(TARGETS)
 check: bst.report
 
 bst.report: bst
-	./bst
+	valgrind ./bst
 	gcov -a -c -f test/bst.c src/map/bintree.o
 # %.report: %
 # 	gcov test/$<.c
@@ -30,7 +30,10 @@ bst: test/bst.o src/map/bintree.o
 
 # ==================================== UTIL ====================================
 
-.PHONY: install clean
+.PHONY: install clean docs
+
+docs:
+	doxygen
 
 install:
 	apt-get install gcov doxygen -y

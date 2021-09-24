@@ -11,22 +11,30 @@
  * @version 1.0.0
  * @date 2021-09-23
  */
-#define mu_assert(message, test)                                               \
-  do {                                                                         \
-    if (!(test))                                                               \
-      return message;                                                          \
-  } while (0)
+#ifndef __MINUNIT_H__
+#define __MINUNIT_H__
+#include <stdio.h>
 
-#define mu_run_test(test)                                                      \
-  do {                                                                         \
-    printf("Running %s:\t", #test);                                             \
-    char *message = test();                                                    \
-    tests_run++;                                                               \
-    if (message) {                                                             \
-      printf("failed\n");                                                      \
-      return message;                                                          \
-    } else {                                                                   \
-      printf("passed\n");                                                      \
-    }                                                                          \
-  } while (0)
+#define mu_assert(message, test) \
+    do {                         \
+        if (!(test))             \
+            return message;      \
+    } while (0)
+
+#define mu_run_test(test)                                           \
+    do {                                                            \
+        printf("Running %s:\t", #test);                             \
+        char *ret = test();                                         \
+        tests_run++;                                                \
+        if (ret) {                                                  \
+            char msg[512] = {0};                                    \
+            printf("failed\n");                                     \
+            sprintf(msg, "(%s:%d): %s\n", __FILE__, __LINE__, ret); \
+            return ret;                                             \
+        } else {                                                    \
+            printf("passed\n");                                     \
+        }                                                           \
+    } while (0)
 extern int tests_run;
+
+#endif

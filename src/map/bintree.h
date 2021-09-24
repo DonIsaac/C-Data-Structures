@@ -1,3 +1,20 @@
+/**
+ * @file bintree.h
+ * @brief A key/value map implemented as a Binary Search Tree
+ *
+ * @author Donald Isaac
+ * @version 0.1
+ * @date 2021-09-24
+ * @copyright Copyright (c) 2021
+ *
+ * @defgroup bt Binary Search Tree
+ * This implementation is able to store heterogenous data of variable size.
+ * Each data entry is stored under a unique search key, which is a string.
+ *
+ * Note that this tree is only able to store one entry per unique key. Inserting
+ * with a duplicate key will cause the existing entry to be overwritten.
+ * Keys are compared using `strcmp`.
+ */
 #ifndef __BINTREE_H__
 #define __BINTREE_H__
 
@@ -5,6 +22,21 @@
 
 #include "map.h"
 
+/**
+ * @brief A Binary Search Tree storing key/value pairs.
+ *
+ * This implementation is able to store heterogenous data of variable size.
+ * Each data entry is stored under a unique search key, which is a string.
+ *
+ * Note that this tree is only able to store one entry per unique key. Inserting
+ * with a duplicate key will cause the existing entry to be overwritten.
+ * Keys are compared using `strcmp`.
+ *
+ * This implementation assumes that it "owns" its data. Insertion with replacement
+ * and deletion will cause entries to be freed. Because of this, storing data
+ * pointers long-term is ill-advised. Prefer entry retrieval (`bt_get`) over
+ * pointer storage.
+ */
 typedef struct bt_bintree BinTree;
 
 /**
@@ -37,9 +69,10 @@ int bt_free(BinTree **tree);
 int bt_height(BinTree *tree);
 
 /**
- * @brief Gets the number of entries in a BinTree.
+ * @brief Gets the number of key/value entries in a BinTree.
  *
  * @param tree The target tree.
+ *
  * @return int The number of entries in the tree. On failure, 0 is returned.
  * To distinguish between a tree with no entries and a failure, check `errno`.
  */
@@ -48,7 +81,12 @@ int bt_size(BinTree *tree);
 /**
  * @brief Inserts an entry into a tree.
  *
- * If an entry under `key` already exists, it is replaced.
+ * If an entry under `key` already exists, it is replaced. The incumbent data
+ * will be removed and its memory will be freed. Reading/writing to an overwritten
+ * entry has undefined behavior.
+ *
+ * Both the entry key and data are copied over into the tree. As such, modifying
+ * the original key or data after insertion will have no effect on the tree.
  *
  * @param tree The BST to insert into.
  * @param key  The entry key.
@@ -63,6 +101,12 @@ int bt_add(BinTree *tree, char *key, void *data, size_t size);
 /**
  * @brief Searches the BinTree for an entry.
  *
+ * Pointers returned from this function should be used for short-term, local
+ * reads and writes. Because the tree "owns" the entry resources, following
+ * operations may free the memory segment pointed to by the pointer. Do not
+ * store the pointer returned by this function for long-term use. Instead,
+ * re-invoke this function when you need to access stored data.
+ *
  * @param tree The tree to search.
  * @param key The key the entry is stored under.
  *
@@ -72,8 +116,11 @@ int bt_add(BinTree *tree, char *key, void *data, size_t size);
  */
 void *bt_get(BinTree *tree, char *key);
 
+// void *bt_get_min(BinTree *tree);
+// void *bt_get_max(BinTree *tree);
+
 /**
- * @brief Checks if an entry for a key exists.
+ * @brief Checks if an entry exists under a specific search key in a BinTree.
  *
  * @param tree The tree to search.
  * @param key  The entry key to check.
@@ -81,5 +128,16 @@ void *bt_get(BinTree *tree, char *key);
  * @return int 1 if an entry exists for `key`, 0 if one does not.
  */
 int bt_has(BinTree *tree, char *key);
+
+/**
+ * @brief Removes an entry from a BinTree, freeing its memory resources.
+ *
+ * @param tree The tree to remove the entry from.
+ * @param key  The entry key.
+ *
+ * @return int 1 if the entry exists ans was successfully deleted. If no entry
+ * exists for the given key, 0 is returned. On error, 0 is returned and `errno`
+ * is set.
+ */
 int bt_remove(BinTree *tree, char *key);
 #endif
