@@ -13,7 +13,7 @@ else ifdef PROD
 endif
 
 .PHONY: all
-all: $(TARGETS) docs
+all: $(TARGETS)
 
 # ================================== TESTING ===================================
 
