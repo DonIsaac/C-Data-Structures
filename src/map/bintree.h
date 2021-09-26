@@ -5,7 +5,7 @@
  * @author Donald Isaac
  * @version 0.1
  * @date 2021-09-24
- * @copyright Copyright (c) 2021
+ * @copyright Copyright (c) 2021. MIT License
  *
  * @defgroup bt Binary Search Tree
  * This implementation is able to store heterogenous data of variable size.

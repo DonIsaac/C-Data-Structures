@@ -64,7 +64,41 @@ $(function() {
 <div class="title">C Data Structures </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a href="https://github.com/DonIsaac/C-Data-Structures/actions/workflows/check.yml"></a> <a href="https://codecov.io/gh/DonIsaac/C-Data-Structures"></a> </p>
+<div class="textblock"><p><a href="https://github.com/DonIsaac/C-Data-Structures/actions/workflows/check.yml"></a> <a href="https://codecov.io/gh/DonIsaac/C-Data-Structures"></a></p>
+<p>A library of data structures in C.</p>
+<h2>Maps</h2>
+<p>Stores key/value pairs. Keys are null-terminated strings, while values may be any type of any size. Maps may store heterogenous data.</p>
+<p>The map implementations that are currently available are:</p>
+<ul>
+<li>Binary Search Tree (<code><a class="el" href="bintree_8h.html" title="A key/value map implemented as a Binary Search Tree. ">bintree.h</a></code>)</li>
+<li>Linked List (<code><a class="el" href="linkedlist_8h.html" title="A key/value map implemented as a Linked List. ">linkedlist.h</a></code>) _(note: incomplete)_</li>
+</ul>
+<h2>Lists</h2>
+<p><em>TODO: Currently no list implementations are available</em></p>
+<h2>Building</h2>
+<blockquote class="doxtable">
+<p>TL;DR: <code>make</code> </p>
+</blockquote>
+<p>To build the source code, run <code>make</code>. For production use, run <code>make PROD=1</code>. This enables compiler optimizations and removes <code>assert</code> macros. For development and testing, run <code>make DEBUG=1</code>.</p>
+<h2>Testing</h2>
+<blockquote class="doxtable">
+<p>TL;DR: <code>make check DEBUG=1</code> </p>
+</blockquote>
+<p>Tests are located in the <code>test</code> folder. They use a modified version of <a href="https://jera.com/techinfo/jtns/jtn002">MinUnit</a>, located in <code><a class="el" href="minunit_8h.html" title="A minimal unit testing framework for C. ">test/minunit.h</a></code>. Running <code>make check DEBUG=1</code> will run all test suites while checking for memory leaks. It then generates code coverage reports using <code>gcov</code>.</p>
+<p>Note that <code>DEBUG=1</code> is recommended but not required for running tests. However, it is required for generating coverage reports. Running tests without setting <code>DEBUG=1</code> will remove debugging symbols, making Valgrind unable to show source-code lines.</p>
+<h2>Other Commands</h2>
+<ul>
+<li><code>make clean</code>: Removes binaries, object files, coverage reports, etc.</li>
+<li><code>make docs</code>: Builds documentation webpages using <a href="https://www.doxygen.nl/index.html">Doxygen</a></li>
+<li><code>make install</code>: Installs packages used by other commands using <code>apt-get</code>. The installed packages include:<ul>
+<li><a href="https://www.valgrind.org/">Valgrind</a></li>
+<li><a href="https://man7.org/linux/man-pages/man1/gcov.1.html">Doxygen</a></li>
+<li><a href="https://man7.org/linux/man-pages/man1/gcov.1.html"><code>gcov</code></a></li>
+</ul>
+</li>
+</ul>
+<h2>License</h2>
+<p>This code is made available under the MIT License. A copy of it is available in <code>LICENSE</code>. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

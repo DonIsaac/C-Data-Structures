@@ -1,11 +1,12 @@
 /**
  * @file linkedlist.h
  *
- * @brief
+ * @brief A key/value map implemented as a Linked List
  *
- * @author Don Isaac
+ * @author Donald Isaac
  * @version 0.0.1
  * @date 2021-09-23
+ * @copyright Copyright (c) 2021. MIT License
  */
 #ifndef __LINKEDLIST_H__
 #define __LINKEDLIST_H__
@@ -39,7 +40,7 @@ int ll_free(LinkedList **ll);
 /**
  * @brief Inserts a key/value entry into a LinkedList.
  *
- * Entry keys must be unique. If an entry already exists under the 
+ * Entry keys must be unique. If an entry already exists under the
  * desired key, this function fails.
  *
  * @param ll   The list to insert into.

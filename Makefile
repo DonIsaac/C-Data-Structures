@@ -1,13 +1,18 @@
+# SPDX-License-Identifier: MIT
 CC = gcc
-CFLAGS = -Wall -Wextra -Wconversion -pedantic -Iincludes -std=c99 # LDLIBS=-lstdc++
+CFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c99 # LDLIBS=-lstdc++
 VPATH = src src/map test
-LDLIBS = -lgcov --coverage
+LDLIBS =
 
 TARGETS = bst
 FOLDERS = ./ src/ src/map/ test/
 
+# Enable debug symbols and code coverage
 ifdef DEBUG
 	CFLAGS += -DDEBUG -ggdb -fprofile-arcs -ftest-coverage
+	LDLIBS += -lgcov --coverage
+
+# Disable assert macro and optimize output
 else ifdef PROD
 	CFLAGS += -O1 -DNDEBUG
 endif
@@ -39,7 +44,7 @@ docs:
 	doxygen
 
 install:
-	apt-get install gcov doxygen -y
+	apt-get install gcov doxygen valgrind -y
 
 clean:
 	$(RM) -rf \

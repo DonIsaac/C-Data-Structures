@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "bintree.h"
 
 #include <assert.h>
@@ -64,11 +65,11 @@ int _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
     size_t keylen = 0;
 
     // Check parameters
-    if (!node || !key || !data) return FAILURE;
+    if (!node || !key || !data) return _MAP_FAILURE;
 
     // Allocate memory for new node
     n = *node = malloc(sizeof(bt_node));
-    if (!n) return FAILURE;
+    if (!n) return _MAP_FAILURE;
 
     // The node has no children
     n->left = NULL;
@@ -77,29 +78,29 @@ int _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
     // copy over key string
     keylen = strlen(key);
     n->key = malloc(keylen + 1);  // Extra byte for null terminator
-    if (!n->key) return FAILURE;  // TODO: this will leak memory
+    if (!n->key) return _MAP_FAILURE;  // TODO: this will leak memory
     strncpy(n->key, key, keylen + 1);
 
     // copy over entry data
     n->size = size;
     n->data = malloc(size);
-    if (!n->data) return FAILURE;  // TODO: this will leak memory
+    if (!n->data) return _MAP_FAILURE;  // TODO: this will leak memory
     memcpy(n->data, data, size);
 
-    return SUCCESS;
+    return _MAP_SUCCESS;
 }
 
 int bt_init(BinTree **tree) {
     BinTree *t = NULL;
 
-    if (!tree) return FAILURE;
+    if (!tree) return _MAP_FAILURE;
 
     t = *tree = malloc(sizeof(BinTree));
-    if (!t) return FAILURE;
+    if (!t) return _MAP_FAILURE;
 
     t->root = NULL;
 
-    return SUCCESS;
+    return _MAP_SUCCESS;
 }
 
 void _bt_node_free(bt_node *node) {
@@ -159,7 +160,7 @@ int _bt_size(bt_node *node) {
 }
 
 int bt_size(BinTree *tree) {
-    if (!tree || !tree->root) return FAILURE;
+    if (!tree || !tree->root) return _MAP_FAILURE;
 
     return _bt_size(tree->root);
 }
@@ -170,17 +171,17 @@ int _bt_add(bt_node *node, char *key, void *data, size_t size) {
     int cmp;  // Comparison between node key and target key
 
     // Check params
-    if (!node || !key || !data) return FAILURE;
+    if (!node || !key || !data) return _MAP_FAILURE;
 
     cmp = strcmp(node->key, key);
     if (!cmp) {
         // Entry with key already exists, replace data
         free(node->data);
         node->data = malloc(size);
-        if (!node->data) return FAILURE;
+        if (!node->data) return _MAP_FAILURE;
         memcpy(node->data, data, size);
         node->size = size;
-        return SUCCESS_REPLACED;
+        return _MAP_SUCCESS_REPLACED;
 
     } else if (cmp > 0) {
         // node key > target key, so go left
@@ -205,7 +206,7 @@ int _bt_add(bt_node *node, char *key, void *data, size_t size) {
 }
 
 int bt_add(BinTree *tree, char *key, void *data, size_t size) {
-    if (!tree || !key || !data) return FAILURE;
+    if (!tree || !key || !data) return _MAP_FAILURE;
 
     // Tree is empty, create a new root node
     if (!tree->root) {
@@ -267,7 +268,7 @@ bt_node *_bt_remove(bt_node *node, char *key, int *status) {
     cmp = strcmp(node->key, key);
     if (!cmp) {  // Base case: entry found, delete current node
         if (_bt_node_is_leaf(node)) {
-            *status = SUCCESS;
+            *status = _MAP_SUCCESS;
             _bt_node_free(node);
             return NULL;
 
@@ -275,7 +276,7 @@ bt_node *_bt_remove(bt_node *node, char *key, int *status) {
             (node->left && !node->right) ||
             (node->right && !node->left)) {
             bt_node *child = node->left ? node->left : node->right;  // Get child subtree
-            *status = SUCCESS;
+            *status = _MAP_SUCCESS;
             _bt_node_free(node);
             return child;
 
@@ -317,9 +318,9 @@ bt_node *_bt_remove(bt_node *node, char *key, int *status) {
 }
 
 int bt_remove(BinTree *tree, char *key) {
-    int status = FAILURE;
+    int status = _MAP_FAILURE;
 
-    if (!tree || !key) return FAILURE;
+    if (!tree || !key) return _MAP_FAILURE;
 
     tree->root = _bt_remove(tree->root, key, &status);
 
