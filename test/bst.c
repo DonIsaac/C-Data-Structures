@@ -4,9 +4,10 @@
 #include "../src/map/bintree.h"
 #include "minunit.h"
 
+int tests_failed = 0;
 int tests_run = 0;
 
-static char *test_bst_empty() {
+mu_test(test_bst_empty) {
     int ret = _MAP_SUCCESS;
     BinTree *tree = NULL;
 
@@ -23,7 +24,7 @@ static char *test_bst_empty() {
     return 0;
 }
 
-static char *test_bst_add_and_remove_1() {
+mu_test(test_bst_add_and_remove_1) {
     int ret = _MAP_SUCCESS;
     BinTree *tree = NULL;
     char *key = "key";
@@ -58,7 +59,7 @@ static char *test_bst_add_and_remove_1() {
     return 0;
 }
 
-static char *test_bst_add_duplicate() {
+mu_test(test_bst_add_duplicate) {
     int ret = _MAP_SUCCESS;
     BinTree *tree = NULL;
     char *key = "key";
@@ -85,7 +86,7 @@ static char *test_bst_add_duplicate() {
     return 0;
 }
 
-static char *test_bst_add_4() {
+mu_test(test_bst_add_4) {
     int ret = _MAP_SUCCESS;
     BinTree *tree = NULL;
     size_t s = sizeof(int);
@@ -116,7 +117,7 @@ static char *test_bst_add_4() {
     return 0;
 }
 
-static char *test_bst_remove_empty() {
+mu_test(test_bst_remove_empty) {
     int ret = _MAP_SUCCESS;
     BinTree *tree = NULL;
 
@@ -131,7 +132,7 @@ static char *test_bst_remove_empty() {
     return 0;
 }
 
-static char *tst_bst_remove_multiple() {
+mu_test(tst_bst_remove_multiple) {
     int ret = _MAP_SUCCESS;
     BinTree *tree = NULL;
     size_t s = sizeof(int);
@@ -241,26 +242,25 @@ static char *tst_bst_remove_multiple() {
     return 0;
 }
 
-static char *all_tests() {
+void all_tests() {
     mu_run_test(test_bst_empty);
     mu_run_test(test_bst_add_and_remove_1);
     mu_run_test(test_bst_add_duplicate);
     mu_run_test(test_bst_add_4);
     mu_run_test(test_bst_remove_empty);
     mu_run_test(tst_bst_remove_multiple);
-
-    return 0;
 }
 
 int main() {
-    char *result = all_tests();
+    // struct mu_res *result = all_tests();
+    all_tests();
 
-    if (result) {
-        printf("%s\n", result);
-    } else {
+    printf("Ran %d tests, %d failed.\n", tests_run, tests_failed);
+
+    if (!tests_failed) {
         printf("All tests passed\n");
+        return EXIT_SUCCESS;
+    } else {
+        return EXIT_FAILURE;
     }
-
-    printf("Ran %d tests\n", tests_run);
-    return result != 0;
 }
