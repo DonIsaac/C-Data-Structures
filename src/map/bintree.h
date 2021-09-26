@@ -87,6 +87,9 @@ int bt_height(BinTree *tree);
  */
 int bt_size(BinTree *tree);
 
+void* bt_min(BinTree *tree);
+void* bt_max(BinTree *tree);
+
 /**
  * @brief Inserts an entry into a tree.
  *

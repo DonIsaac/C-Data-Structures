@@ -19,10 +19,14 @@ struct bt_bintree {
     bt_node *root;
 };
 
-// =============================== PRIVATE UTIL ================================
+// =============================== PRIVATE UTILS ===============================
+
+bt_node *_bt_min(bt_node *node);
+bt_node *_bt_max(bt_node *node);
 
 int _bt_num_children(bt_node *node) {
     assert(node);
+
     // Both children are null, node is leaf
     if (!node->left && !node->right)
         return 0;
@@ -39,23 +43,6 @@ int _bt_num_children(bt_node *node) {
 }
 bool _bt_node_is_leaf(bt_node *node) {
     return _bt_num_children(node) == 0;
-}
-
-bt_node *_bt_min(bt_node *node) {
-    if (!node) return NULL;
-
-    switch (_bt_num_children(node)) {
-        case 0:
-            return node;
-        case 1:
-            if (node->left) {
-                return _bt_min(node->left);
-            } else {
-                return node;
-            }
-        default:
-            return _bt_min(node->left);
-    }
 }
 
 // =============================== INIT/DESTROY  =================================
@@ -173,6 +160,7 @@ int _bt_add(bt_node *node, char *key, void *data, size_t size) {
     // Check params
     if (!node || !key || !data) return _MAP_FAILURE;
 
+    assert(node->key);
     cmp = strcmp(node->key, key);
     if (!cmp) {
         // Entry with key already exists, replace data
@@ -325,4 +313,56 @@ int bt_remove(BinTree *tree, char *key) {
     tree->root = _bt_remove(tree->root, key, &status);
 
     return status;
+}
+
+// ================================== MIN/MAX ==================================
+
+bt_node *_bt_min(bt_node *node) {
+    if (!node) return NULL;
+
+    switch (_bt_num_children(node)) {
+        case 0:
+            return node;
+        case 1:
+            if (node->left) {
+                return _bt_min(node->left);
+            } else {
+                return node;
+            }
+        default:
+            return _bt_min(node->left);
+    }
+}
+
+void* bt_min(BinTree *tree) {
+    if (!tree || !tree->root) return NULL;
+
+    bt_node *min = _bt_min(tree->root);
+
+    return min->data;
+}
+
+bt_node *_bt_max(bt_node *node) {
+    if (!node) return NULL;
+
+    switch (_bt_num_children(node)) {
+        case 0:
+            return node;
+        case 1:
+            if (node->right) {
+                return _bt_max(node->right);
+            } else {
+                return node;
+            }
+        default:
+            return _bt_max(node->right);
+    }
+}
+
+void* bt_max(BinTree *tree) {
+    if (!tree || !tree->root) return NULL;
+
+    bt_node *max = _bt_max(tree->root);
+
+    return max->data;
 }

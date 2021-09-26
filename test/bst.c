@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "../src/map/bintree.h"
 #include "minunit.h"
+
+#define _BST_TEST_STRLEN 512
 
 int tests_failed = 0;
 int tests_run = 0;
@@ -243,6 +246,61 @@ mu_test(tst_bst_remove_multiple) {
     return 0;
 }
 
+mu_test(test_bst_min_max) {
+
+    BinTree *tree = NULL;
+    size_t s = sizeof(int);
+    char key[_BST_TEST_STRLEN] = {0};
+    int data;
+
+    // char keys[5] = {"a", "b", "c", "d", "e"};
+    // int data[5] = {1, 2, 3, 4, 5};
+
+    bt_init(&tree);
+
+    // Empty trees have no min/max
+    mu_assert("bt_max() should return NULL for empty trees.", bt_max(tree) == NULL);
+    mu_assert("bt_min() should return NULL for empty trees.", bt_min(tree) == NULL);
+
+    // Add (c, 1). Trees with 1 node have the same min/max
+    strcpy(key, "c");
+    data = 1;
+    bt_add(tree, key, &data, s);
+    mu_assert("Expected bt_max() to return *1 after inserting (c, 1).", *((int *)bt_max(tree)) == 1);
+    mu_assert("Expected bt_min() to return *1 after inserting (c, 1).", *((int *)bt_min(tree)) == 1);
+
+    // Add (e, 2)
+    strcpy(key, "e");
+    data = 2;
+    bt_add(tree, key, &data, s);
+    mu_assert("Expected bt_max() to return *2 after inserting (e, 2).", *((int *)bt_max(tree)) == 2);
+    mu_assert("Expected bt_min() to return *1 after inserting (e, 2).", *((int *)bt_min(tree)) == 1);
+
+    // Add (d, 3)
+    strcpy(key, "d");
+    data = 3;
+    bt_add(tree, key, &data, s);
+    mu_assert("Expected bt_max() to return *2 after inserting (d, 3).", *((int *)bt_max(tree)) == 2);
+    mu_assert("Expected bt_min() to return *1 after inserting (d, 3).", *((int *)bt_min(tree)) == 1);
+
+    // Add (a, 4)
+    strcpy(key, "a");
+    data = 4;
+    bt_add(tree, key, &data, s);
+    mu_assert("Expected bt_max() to return *1 after inserting (a, 4).", *((int *)bt_max(tree)) == 2);
+    mu_assert("Expected bt_min() to return *4 after inserting (a, 4).", *((int *)bt_min(tree)) == 4);
+
+    // Add (b, 5)
+    strcpy(key, "b");
+    data = 5;
+    bt_add(tree, key, &data, s);
+    mu_assert("Expected bt_max() to return *1 after inserting (b, 5).", *((int *)bt_max(tree)) == 2);
+    mu_assert("Expected bt_min() to return *4 after inserting (b, 5).", *((int *)bt_min(tree)) == 4);
+
+    bt_free(&tree);
+    return 0;
+}
+
 void all_tests() {
     mu_run_test(test_bst_empty);
     mu_run_test(test_bst_add_and_remove_1);
@@ -250,6 +308,7 @@ void all_tests() {
     mu_run_test(test_bst_add_4);
     mu_run_test(test_bst_remove_empty);
     mu_run_test(tst_bst_remove_multiple);
+    mu_run_test(test_bst_min_max);
 }
 
 int main() {
