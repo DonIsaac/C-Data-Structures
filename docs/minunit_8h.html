@@ -65,6 +65,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -83,8 +84,16 @@ Include dependency graph for minunit.h:</div>
 </div>
 <p><a href="minunit_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmu__res.html">mu_res</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:ac8d725c5cf77264e3e5a25e264c13d72"><td class="memItemLeft" align="right" valign="top"><a id="ac8d725c5cf77264e3e5a25e264c13d72"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>mu_test</b>(name)&#160;&#160;&#160;static struct <a class="el" href="structmu__res.html">mu_res</a> *name()</td></tr>
+<tr class="separator:ac8d725c5cf77264e3e5a25e264c13d72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad83ba6b11df552879dd0f0a4ce43407"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>mu_assert</b>(message,  test)</td></tr>
 <tr class="separator:aad83ba6b11df552879dd0f0a4ce43407"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c8e76cc15deeca6f9afa206f6caca76"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>mu_run_test</b>(test)</td></tr>
@@ -95,6 +104,12 @@ Variables</h2></td></tr>
 <tr class="memitem:a91aa4203331e915f2d20dd26579791ee"><td class="memItemLeft" align="right" valign="top"><a id="a91aa4203331e915f2d20dd26579791ee"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>tests_run</b></td></tr>
 <tr class="separator:a91aa4203331e915f2d20dd26579791ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac416cbab22199a47838dc6de83be2b25"><td class="memItemLeft" align="right" valign="top"><a id="ac416cbab22199a47838dc6de83be2b25"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>tests_failed</b></td></tr>
+<tr class="separator:ac416cbab22199a47838dc6de83be2b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33d9ff46c66c3e747fbf98c711858200"><td class="memItemLeft" align="right" valign="top"><a id="a33d9ff46c66c3e747fbf98c711858200"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>num_assertions</b></td></tr>
+<tr class="separator:a33d9ff46c66c3e747fbf98c711858200"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A minimal unit testing framework for C. </p>
@@ -129,7 +144,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>tests_run</b></td></tr
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                         \</div><div class="line">        if (!(test))             \</div><div class="line">            return message;      \</div><div class="line">    } <span class="keywordflow">while</span> (0)</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                                         \</div><div class="line">        num_assertions++;                        \</div><div class="line">        if (!(test)) {                           \</div><div class="line">            struct <a class="code" href="structmu__res.html">mu_res</a> *ret = {0};            \</div><div class="line">            ret = malloc(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> <a class="code" href="structmu__res.html">mu_res</a>)); \</div><div class="line">            ret-&gt;file = __FILE__;                \</div><div class="line">            ret-&gt;line = __LINE__;                \</div><div class="line">            ret-&gt;msg = message;                  \</div><div class="line">            ret-&gt;assertion = #test;              \</div><div class="line">            return ret;                          \</div><div class="line">        }                                        \</div><div class="line">    } <span class="keywordflow">while</span> (0)</div><div class="ttc" id="structmu__res_html"><div class="ttname"><a href="structmu__res.html">mu_res</a></div><div class="ttdef"><b>Definition:</b> minunit.h:18</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a9c8e76cc15deeca6f9afa206f6caca76"></a>
@@ -147,7 +163,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>tests_run</b></td></tr
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                                                            \</div><div class="line">        printf(<span class="stringliteral">&quot;Running %s:\t&quot;</span>, #test);                             \</div><div class="line">        char *ret = test();                                         \</div><div class="line">        tests_run++;                                                \</div><div class="line">        if (ret) {                                                  \</div><div class="line">            char msg[512] = {0};                                    \</div><div class="line">            printf(<span class="stringliteral">&quot;failed\n&quot;</span>);                                     \</div><div class="line">            sprintf(msg, <span class="stringliteral">&quot;(%s:%d): %s\n&quot;</span>, __FILE__, __LINE__, ret); \</div><div class="line">            return ret;                                             \</div><div class="line">        } <span class="keywordflow">else</span> {                                                    \</div><div class="line">            printf(<span class="stringliteral">&quot;passed\n&quot;</span>);                                     \</div><div class="line">        }                                                           \</div><div class="line">    } <span class="keywordflow">while</span> (0)</div></div><!-- fragment -->
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span> {                                                                                                  \</div><div class="line">        printf(<span class="stringliteral">&quot;Running %s:\t&quot;</span>, #test);                                                                   \</div><div class="line">        struct <a class="code" href="structmu__res.html">mu_res</a> *ret = test();                                                                      \</div><div class="line">        tests_run++;                                                                                      \</div><div class="line">        if (ret) {                                                                                        \</div><div class="line">            printf(<span class="stringliteral">&quot;failed\n&quot;</span>);                                                                           \</div><div class="line">            printf(<span class="stringliteral">&quot;\n(%s:%u): %s\n\tassertion: %s\n\n&quot;</span>, ret-&gt;file, ret-&gt;line, ret-&gt;msg, ret-&gt;assertion); \</div><div class="line">            tests_failed++;                                                                               \</div><div class="line">            <span class="comment">/* return ret; */</span>                                                                             \</div><div class="line">        } <span class="keywordflow">else</span> {                                                                                          \</div><div class="line">            printf(<span class="stringliteral">&quot;passed\n&quot;</span>);                                                                           \</div><div class="line">        }                                                                                                 \</div><div class="line">    } <span class="keywordflow">while</span> (0);</div><div class="ttc" id="structmu__res_html"><div class="ttname"><a href="structmu__res.html">mu_res</a></div><div class="ttdef"><b>Definition:</b> minunit.h:18</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

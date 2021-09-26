@@ -88,6 +88,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga40d8e9e19ab42c6c1af7a411e2df678c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bt.html#ga40d8e9e19ab42c6c1af7a411e2df678c">bt_size</a> (<a class="el" href="group__bt.html#ga8cfce7a7b24c6bc3bd333c1c0127feed">BinTree</a> *tree)</td></tr>
 <tr class="memdesc:ga40d8e9e19ab42c6c1af7a411e2df678c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of key/value entries in a BinTree.  <a href="#ga40d8e9e19ab42c6c1af7a411e2df678c">More...</a><br /></td></tr>
 <tr class="separator:ga40d8e9e19ab42c6c1af7a411e2df678c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a1ee8f8ee448c43690f845d0befdef5"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bt.html#ga3a1ee8f8ee448c43690f845d0befdef5">bt_min</a> (<a class="el" href="group__bt.html#ga8cfce7a7b24c6bc3bd333c1c0127feed">BinTree</a> *tree)</td></tr>
+<tr class="memdesc:ga3a1ee8f8ee448c43690f845d0befdef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value stored in the smallest entry.  <a href="#ga3a1ee8f8ee448c43690f845d0befdef5">More...</a><br /></td></tr>
+<tr class="separator:ga3a1ee8f8ee448c43690f845d0befdef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ea4480184018502f4dfc5cb42f48631"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bt.html#ga0ea4480184018502f4dfc5cb42f48631">bt_max</a> (<a class="el" href="group__bt.html#ga8cfce7a7b24c6bc3bd333c1c0127feed">BinTree</a> *tree)</td></tr>
+<tr class="memdesc:ga0ea4480184018502f4dfc5cb42f48631"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value stored in the largest entry.  <a href="#ga0ea4480184018502f4dfc5cb42f48631">More...</a><br /></td></tr>
+<tr class="separator:ga0ea4480184018502f4dfc5cb42f48631"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga15a5d47d50fa3a975c9063d20dd15cbf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__bt.html#ga15a5d47d50fa3a975c9063d20dd15cbf">bt_add</a> (<a class="el" href="group__bt.html#ga8cfce7a7b24c6bc3bd333c1c0127feed">BinTree</a> *tree, char *key, void *data, size_t size)</td></tr>
 <tr class="memdesc:ga15a5d47d50fa3a975c9063d20dd15cbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts an entry into a tree.  <a href="#ga15a5d47d50fa3a975c9063d20dd15cbf">More...</a><br /></td></tr>
 <tr class="separator:ga15a5d47d50fa3a975c9063d20dd15cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -334,6 +340,60 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int 1 on success, 0 on failure. </dd></dl>
+
+</div>
+</div>
+<a id="ga0ea4480184018502f4dfc5cb42f48631"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0ea4480184018502f4dfc5cb42f48631">&#9670;&nbsp;</a></span>bt_max()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* bt_max </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__bt.html#ga8cfce7a7b24c6bc3bd333c1c0127feed">BinTree</a> *&#160;</td>
+          <td class="paramname"><em>tree</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the value stored in the largest entry. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tree</td><td>The target tree.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The largest entry's stored data. If the tree is empty, <code>NULL</code> is returned. </dd></dl>
+
+</div>
+</div>
+<a id="ga3a1ee8f8ee448c43690f845d0befdef5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3a1ee8f8ee448c43690f845d0befdef5">&#9670;&nbsp;</a></span>bt_min()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* bt_min </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__bt.html#ga8cfce7a7b24c6bc3bd333c1c0127feed">BinTree</a> *&#160;</td>
+          <td class="paramname"><em>tree</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the value stored in the smallest entry. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tree</td><td>The target tree.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The smallest entry's stored data. If the tree is empty, <code>NULL</code> is returned. </dd></dl>
 
 </div>
 </div>

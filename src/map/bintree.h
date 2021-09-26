@@ -87,7 +87,28 @@ int bt_height(BinTree *tree);
  */
 int bt_size(BinTree *tree);
 
+/**
+ * @brief Gets the value stored in the smallest entry.
+ *
+ * @ingroup bt
+ *
+ * @param tree The target tree.
+ *
+ * @return The smallest entry's stored data. If the tree is empty, `NULL` is
+ * returned.
+ */
 void* bt_min(BinTree *tree);
+
+/**
+ * @brief Gets the value stored in the largest entry.
+ *
+ * @ingroup bt
+ *
+ * @param tree The target tree.
+ *
+ * @return The largest entry's stored data. If the tree is empty, `NULL` is
+ * returned.
+ */
 void* bt_max(BinTree *tree);
 
 /**
