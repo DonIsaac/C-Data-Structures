@@ -6,6 +6,7 @@
 
 int tests_failed = 0;
 int tests_run = 0;
+int num_assertions = 0;
 
 mu_test(test_bst_empty) {
     int ret = _MAP_SUCCESS;
@@ -255,7 +256,7 @@ int main() {
     // struct mu_res *result = all_tests();
     all_tests();
 
-    printf("Ran %d tests, %d failed.\n", tests_run, tests_failed);
+    printf("\nTests run: %d\nTests failed: %d\nTotal assertions: %d\n\n", tests_run, tests_failed, num_assertions);
 
     if (!tests_failed) {
         printf("All tests passed\n");
