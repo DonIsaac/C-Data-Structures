@@ -4,8 +4,8 @@ CFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c99 # LDLI
 VPATH = src src/map test
 LDLIBS =
 
-TARGETS = bst
-FOLDERS = ./ src/ src/map/ test/
+TARGETS = bst vector
+FOLDERS = ./ src/ src/map/ test/ src/lists
 
 # Enable debug symbols and code coverage
 ifdef DEBUG
@@ -33,6 +33,18 @@ bst.report: bst
 # %.report: %
 # 	gcov test/$<.c
 bst: test/bst.o src/map/bintree.o
+
+
+vector.report: vector
+	valgrind --leak-check=full ./vector
+	gcov --all-blocks --branch-counts test/vector.c src/lists/vector.c
+
+
+
+vector: test/vector.o src/lists/vector.o
+
+
+
 
 # %.tst: test/%.o
 
