@@ -24,7 +24,7 @@ all: $(TARGETS)
 
 .PHONY: *.report check
 
-check: bst.report
+check: $(addsuffix .report, $(TARGETS))
 
 bst.report: bst
 	valgrind --leak-check=full ./bst
