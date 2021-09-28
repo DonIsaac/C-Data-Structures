@@ -3,6 +3,7 @@
 
 # Binaries
 bst
+vector
 
 # Temporary files
 *.tmp
