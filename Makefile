@@ -63,6 +63,7 @@ lint: check-deps
 	clang-format -i \
 	$(addsuffix *.c, $(FOLDERS)) \
 	$(addsuffix *.h, $(FOLDERS))
+
 clean:
 	$(RM) -rf \
 		$(addsuffix *.o, $(FOLDERS)) \
