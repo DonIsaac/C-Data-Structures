@@ -60,7 +60,7 @@ check-deps.target:
 	@touch check-deps.target
 
 lint: check-deps
-	clang-format \
+	clang-format -i \
 	$(addsuffix *.c, $(FOLDERS)) \
 	$(addsuffix *.h, $(FOLDERS))
 clean:

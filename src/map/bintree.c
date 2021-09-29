@@ -64,7 +64,7 @@ int _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
 
     // copy over key string
     keylen = strlen(key);
-    n->key = malloc(keylen + 1);  // Extra byte for null terminator
+    n->key = malloc(keylen + 1);       // Extra byte for null terminator
     if (!n->key) return _MAP_FAILURE;  // TODO: this will leak memory
     strncpy(n->key, key, keylen + 1);
 
@@ -273,18 +273,18 @@ bt_node *_bt_remove(bt_node *node, char *key, int *status) {
             assert(right_min);
 
             // Replace node's key with right min's key
-            size_t keylen = strlen(right_min->key); // Free old key
+            size_t keylen = strlen(right_min->key);  // Free old key
             free(node->key);
             node->key = malloc(keylen + 1);
-            if (!node->key) return NULL; // TODO: What do here?
-            strncpy(node->key, right_min->key, keylen + 1); // Copy key to node
+            if (!node->key) return NULL;                     // TODO: What do here?
+            strncpy(node->key, right_min->key, keylen + 1);  // Copy key to node
 
             // Replace node's value with right min's value
-            free(node->data);                    // Free old data
+            free(node->data);  // Free old data
             node->size = right_min->size;
             node->data = malloc(right_min->size);
-            if (!node->data) return NULL; // TODO: What do here?
-            memcpy(node->data, right_min->data, right_min->size); // Copy data to node
+            if (!node->data) return NULL;                          // TODO: What do here?
+            memcpy(node->data, right_min->data, right_min->size);  // Copy data to node
 
             // Remove (now duplicate) min node from right subtree
             node->right = _bt_remove(node->right, right_min->key, status);
@@ -334,7 +334,7 @@ bt_node *_bt_min(bt_node *node) {
     }
 }
 
-void* bt_min(BinTree *tree) {
+void *bt_min(BinTree *tree) {
     if (!tree || !tree->root) return NULL;
 
     bt_node *min = _bt_min(tree->root);
@@ -359,7 +359,7 @@ bt_node *_bt_max(bt_node *node) {
     }
 }
 
-void* bt_max(BinTree *tree) {
+void *bt_max(BinTree *tree) {
     if (!tree || !tree->root) return NULL;
 
     bt_node *max = _bt_max(tree->root);

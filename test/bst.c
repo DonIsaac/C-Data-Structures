@@ -247,7 +247,6 @@ mu_test(tst_bst_remove_multiple) {
 }
 
 mu_test(test_bst_min_max) {
-
     BinTree *tree = NULL;
     size_t s = sizeof(int);
     char key[_BST_TEST_STRLEN] = {0};
