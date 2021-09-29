@@ -4,7 +4,11 @@ CFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c99 # LDLI
 VPATH = src src/map test
 LDLIBS =
 
+# Binaries used by various commands
+DEPS = gcov doxygen valgrind clang-format
+# Binaries to be built
 TARGETS = bst vector
+# Folders containing source code
 FOLDERS = ./ src/ src/map/ test/ src/lists
 
 # Enable debug symbols and code coverage
@@ -24,7 +28,7 @@ all: $(TARGETS)
 
 .PHONY: *.report check
 
-check: $(addsuffix .report, $(TARGETS))
+check: check-deps $(addsuffix .report, $(TARGETS))
 
 bst.report: bst
 	valgrind --leak-check=full ./bst
@@ -34,33 +38,35 @@ bst.report: bst
 # 	gcov test/$<.c
 bst: test/bst.o src/map/bintree.o
 
-
 vector.report: vector
 	valgrind --leak-check=full ./vector
 	gcov --all-blocks --branch-counts test/vector.c src/lists/vector.c
 
-
-
 vector: test/vector.o src/lists/vector.o
-
-
-
-
-# %.tst: test/%.o
 
 # ==================================== UTIL ====================================
 
-.PHONY: install clean docs
+.PHONY: install clean docs check-deps lint
 
 docs:
 	doxygen
 
 install:
-	apt-get install gcov doxygen valgrind -y
+	apt-get install $(DEPS) -y
 
+check-deps: check-deps.target
+check-deps.target:
+	@./check-deps.sh $(DEPS)
+	@touch check-deps.target
+
+lint: check-deps
+	clang-format \
+	$(addsuffix *.c, $(FOLDERS)) \
+	$(addsuffix *.h, $(FOLDERS))
 clean:
 	$(RM) -rf \
 		$(addsuffix *.o, $(FOLDERS)) \
 		$(addsuffix *.gcov, $(FOLDERS)) \
 		$(addsuffix *.gcno, $(FOLDERS)) \
-		$(TARGETS)
+		$(TARGETS) \
+		*.target
