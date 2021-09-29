@@ -1,12 +1,16 @@
 /**
  * @file linkedlist.h
  *
- * @brief A key/value map implemented as a Linked List
+ * @brief A key/value map implemented with a Doubly Linked List.
  *
  * @author Donald Isaac
  * @version 0.0.1
  * @date 2021-09-23
  * @copyright Copyright (c) 2021. MIT License
+ *
+ * @defgroup ll Linked List
+ *
+ * A key/value map implemented with a Doubly Linked List.
  */
 #ifndef __LINKEDLIST_H__
 #define __LINKEDLIST_H__
@@ -19,6 +23,8 @@ typedef struct ll_linkedlist LinkedList;
 /**
  * @brief Constructs a new LinkedList
  *
+ * @ingroup ll
+ *
  * @param ll Pointer to the list to initialize.
  *
  * @return 1 if a new LinkedList is successfully created. On error, `errno` is
@@ -28,6 +34,8 @@ int ll_new(LinkedList **ll);
 
 /**
  * @brief Destroys a LinkedList, freeing all resources associated with it.
+ *
+ * @ingroup ll
  *
  * After destruction, the list pointed to by `ll` will be set to `NULL`.
  *
@@ -43,6 +51,8 @@ int ll_free(LinkedList **ll);
  * Entry keys must be unique. If an entry already exists under the
  * desired key, this function fails.
  *
+ * @ingroup ll
+ *
  * @param ll   The list to insert into.
  * @param key  The entry key. Can be used later to locate this entry.
  * @param data The data stored in the entry.
@@ -55,6 +65,7 @@ int ll_add(LinkedList *ll, char *key, void *data, size_t size);
 /**
  * @brief Retrieves an entry stored in the list.
  *
+ * @ingroup ll
  *
  * @param ll  The list to retrieve the entry from.
  * @param key The entry key.
@@ -68,6 +79,8 @@ int ll_get(LinkedList *ll, char *key, void *dst);
 /**
  * @brief Removes an entry stored in a LinkedList.
  *
+ * @ingroup ll
+ *
  * @param ll The list to remove the entry from.
  * @param key The entry key.
  *
@@ -80,6 +93,8 @@ int ll_remove(LinkedList *ll, char *key);
 /**
  * @brief Checks if an entry exists for a key.
  *
+ * @ingroup ll
+ *
  * @param l   The list to check.
  * @param key The entry key.
  *
@@ -90,6 +105,8 @@ int ll_contains(LinkedList *l, char *key);
 
 /**
  * @brief Gets the number of entries stored in a LinkedList.
+ *
+ * @ingroup ll
  *
  * @param l The list to get the size of.
  *
