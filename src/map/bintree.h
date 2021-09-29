@@ -3,7 +3,7 @@
  * @brief A key/value map implemented as a Binary Search Tree
  *
  * @author Donald Isaac
- * @version 0.1
+ * @version 0.0.1
  * @date 2021-09-24
  * @copyright Copyright (c) 2021. MIT License
  *

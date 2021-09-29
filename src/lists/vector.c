@@ -4,10 +4,8 @@
 #include <string.h>
 #include <stdbool.h>
 #include <inttypes.h>
+
 #include "vector.h"
-
-
-
 
 void vector_init(Vector *v, uint32_t capacity, 
 	size_t data_size, 
@@ -34,7 +32,6 @@ void vector_pushback(Vector *v, void *datum) {
 	v->size++;
 }
 
-
 void vector_popback(Vector *v) {
 	if (v->size <= 0) {
 		fprintf(stderr, "Error: vector popback() on empty vector");
@@ -55,7 +52,6 @@ void vector_set(Vector *v, void *data, size_t index) {
 	memcpy(data_start, data, v->data_size);
 }  
 
-
 void * vector_get(Vector *v, size_t index) {  
 	if (index >= v->capacity) {
 		fprintf(stderr, "Error: vector get() index greater than vector size\n");
@@ -63,8 +59,6 @@ void * vector_get(Vector *v, size_t index) {
 	}
 	return (uint8_t *)(v->data) + v->data_size * index;  
 }  
-
-
 
 void vector_free(Vector *v) {
 	if (v->free_element != NULL) {
@@ -76,9 +70,4 @@ void vector_free(Vector *v) {
 	
 	free(v->data);
 }
-
-
-
-
-
 
