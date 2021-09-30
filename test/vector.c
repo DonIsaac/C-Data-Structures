@@ -20,6 +20,22 @@ mu_test(test_vector_empty) {
     return 0;
 }
 
+mu_test(test_vector_get_set) {
+    Vector v;
+    void *actual = NULL;
+    int data = 5;
+    vector_init(&v, 16, 4, NULL);
+
+    actual = vector_get(&v, 0);
+    mu_assert("Vector should start of empty", actual == NULL);
+
+    vector_set(&v, &data, 0);
+    actual = vector_get(&v, 0);
+    mu_assert("After setting index 0 to 5, vector_get() at index 0 should return 5", *((int *)actual) == 5);
+    vector_free(&v);
+
+    return 0;
+}
 mu_test(test_vector_grow) {
     Vector v;
     vector_init(&v, 4, 4, NULL);
@@ -86,6 +102,7 @@ mu_test(test_vector_free_element) {
 
 void all_tests() {
     mu_run_test(test_vector_empty);
+    mu_run_test(test_vector_get_set);
     mu_run_test(test_vector_grow);
     mu_run_test(test_vector_grow_and_delete);
     mu_run_test(test_vector_free_element)

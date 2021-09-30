@@ -48,6 +48,7 @@ source-code lines.
     - [Valgrind](https://www.valgrind.org/)
     - [Doxygen](https://man7.org/linux/man-pages/man1/gcov.1.html)
     - [`gcov`](https://man7.org/linux/man-pages/man1/gcov.1.html)
+    - [`clang-format`](https://clang.llvm.org/docs/ClangFormat.html)
 
 ## License
 
