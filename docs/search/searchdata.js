@@ -1,12 +1,12 @@
 var indexSectionsWithContent =
 {
-  0: "_bcflmv",
+  0: "_bcdflmsv",
   1: "_blm",
   2: "blmv",
   3: "blv",
-  4: "f",
+  4: "cdfs",
   5: "bv",
-  6: "bv",
+  6: "blv",
   7: "c"
 };
 
