@@ -52,11 +52,11 @@ int _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
     size_t keylen = 0;
 
     // Check parameters
-    if (!node || !key || !data) return _MAP_FAILURE;
+    if (!node || !key || !data) return _CDST_FAILURE;
 
     // Allocate memory for new node
     n = *node = malloc(sizeof(bt_node));
-    if (!n) return _MAP_FAILURE;
+    if (!n) return _CDST_FAILURE;
 
     // The node has no children
     n->left = NULL;
@@ -64,30 +64,30 @@ int _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
 
     // copy over key string
     keylen = strlen(key);
-    n->key = malloc(keylen + 1);       // Extra byte for null terminator
-    if (!n->key) return _MAP_FAILURE;  // TODO: this will leak memory
+    n->key = malloc(keylen + 1);        // Extra byte for null terminator
+    if (!n->key) return _CDST_FAILURE;  // TODO: this will leak memory
     strncpy(n->key, key, keylen + 1);
 
     // copy over entry data
     n->size = size;
     n->data = malloc(size);
-    if (!n->data) return _MAP_FAILURE;  // TODO: this will leak memory
+    if (!n->data) return _CDST_FAILURE;  // TODO: this will leak memory
     memcpy(n->data, data, size);
 
-    return _MAP_SUCCESS;
+    return _CDST_SUCCESS;
 }
 
 int bt_init(BinTree **tree) {
     BinTree *t = NULL;
 
-    if (!tree) return _MAP_FAILURE;
+    if (!tree) return _CDST_FAILURE;
 
     t = *tree = malloc(sizeof(BinTree));
-    if (!t) return _MAP_FAILURE;
+    if (!t) return _CDST_FAILURE;
 
     t->root = NULL;
 
-    return _MAP_SUCCESS;
+    return _CDST_SUCCESS;
 }
 
 void _bt_node_free(bt_node *node) {
@@ -147,7 +147,7 @@ int _bt_size(bt_node *node) {
 }
 
 int bt_size(BinTree *tree) {
-    if (!tree || !tree->root) return _MAP_FAILURE;
+    if (!tree || !tree->root) return _CDST_FAILURE;
 
     return _bt_size(tree->root);
 }
@@ -158,7 +158,7 @@ int _bt_add(bt_node *node, char *key, void *data, size_t size) {
     int cmp;  // Comparison between node key and target key
 
     // Check params
-    if (!node || !key || !data) return _MAP_FAILURE;
+    if (!node || !key || !data) return _CDST_FAILURE;
 
     assert(node->key);
     cmp = strcmp(node->key, key);
@@ -166,10 +166,10 @@ int _bt_add(bt_node *node, char *key, void *data, size_t size) {
         // Entry with key already exists, replace data
         free(node->data);
         node->data = malloc(size);
-        if (!node->data) return _MAP_FAILURE;
+        if (!node->data) return _CDST_FAILURE;
         memcpy(node->data, data, size);
         node->size = size;
-        return _MAP_SUCCESS_REPLACED;
+        return _CDST_SUCCESS_REPLACED;
 
     } else if (cmp > 0) {
         // node key > target key, so go left
@@ -194,7 +194,7 @@ int _bt_add(bt_node *node, char *key, void *data, size_t size) {
 }
 
 int bt_add(BinTree *tree, char *key, void *data, size_t size) {
-    if (!tree || !key || !data) return _MAP_FAILURE;
+    if (!tree || !key || !data) return _CDST_FAILURE;
 
     // Tree is empty, create a new root node
     if (!tree->root) {
@@ -256,7 +256,7 @@ bt_node *_bt_remove(bt_node *node, char *key, int *status) {
     cmp = strcmp(node->key, key);
     if (!cmp) {  // Base case: entry found, delete current node
         if (_bt_node_is_leaf(node)) {
-            *status = _MAP_SUCCESS;
+            *status = _CDST_SUCCESS;
             _bt_node_free(node);
             return NULL;
 
@@ -264,7 +264,7 @@ bt_node *_bt_remove(bt_node *node, char *key, int *status) {
             (node->left && !node->right) ||
             (node->right && !node->left)) {
             bt_node *child = node->left ? node->left : node->right;  // Get child subtree
-            *status = _MAP_SUCCESS;
+            *status = _CDST_SUCCESS;
             _bt_node_free(node);
             return child;
 
@@ -306,9 +306,9 @@ bt_node *_bt_remove(bt_node *node, char *key, int *status) {
 }
 
 int bt_remove(BinTree *tree, char *key) {
-    int status = _MAP_FAILURE;
+    int status = _CDST_FAILURE;
 
-    if (!tree || !key) return _MAP_FAILURE;
+    if (!tree || !key) return _CDST_FAILURE;
 
     tree->root = _bt_remove(tree->root, key, &status);
 

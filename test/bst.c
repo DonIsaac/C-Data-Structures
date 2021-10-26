@@ -12,12 +12,12 @@ int tests_run = 0;
 int num_assertions = 0;
 
 mu_test(test_bst_empty) {
-    int ret = _MAP_SUCCESS;
+    int ret = _CDST_SUCCESS;
     BinTree *tree = NULL;
 
     ret = bt_init(&tree);
 
-    mu_assert("Failed to initialize tree.", ret == _MAP_SUCCESS);
+    mu_assert("Failed to initialize tree.", ret == _CDST_SUCCESS);
     mu_assert("Empty tree's height is not 0.", bt_height(tree) == 0);
     mu_assert("Empty tree's size is not 0.", bt_size(tree) == 0);
 
@@ -29,18 +29,18 @@ mu_test(test_bst_empty) {
 }
 
 mu_test(test_bst_add_and_remove_1) {
-    int ret = _MAP_SUCCESS;
+    int ret = _CDST_SUCCESS;
     BinTree *tree = NULL;
     char *key = "key";
     int data = 5;
     int *data_from_tree = NULL;
 
     ret = bt_init(&tree);
-    mu_assert("Failed to initialize tree.", ret == _MAP_SUCCESS);
+    mu_assert("Failed to initialize tree.", ret == _CDST_SUCCESS);
 
     // test insertion
     ret = bt_add(tree, key, &data, sizeof(int));
-    mu_assert("Failed to insert entry into empty tree.", ret == _MAP_SUCCESS);
+    mu_assert("Failed to insert entry into empty tree.", ret == _CDST_SUCCESS);
 
     // test size after insertion
     mu_assert("Tree with 1 entry should have a size of 1.", bt_size(tree) == 1);
@@ -64,7 +64,7 @@ mu_test(test_bst_add_and_remove_1) {
 }
 
 mu_test(test_bst_add_duplicate) {
-    int ret = _MAP_SUCCESS;
+    int ret = _CDST_SUCCESS;
     BinTree *tree = NULL;
     char *key = "key";
     int data1 = 10, data2 = 5;
@@ -72,15 +72,15 @@ mu_test(test_bst_add_duplicate) {
 
     // Construct the tree
     ret = bt_init(&tree);
-    mu_assert("Failed to initialize tree.", ret == _MAP_SUCCESS);
+    mu_assert("Failed to initialize tree.", ret == _CDST_SUCCESS);
 
     // test insertion
     ret = bt_add(tree, key, &data1, sizeof(int));
-    mu_assert("Failed to insert first entry into empty tree.", ret == _MAP_SUCCESS);
+    mu_assert("Failed to insert first entry into empty tree.", ret == _CDST_SUCCESS);
 
     ret = bt_add(tree, key, &data2, sizeof(int));
-    mu_assert("Failed to insert duplicate key.", ret != _MAP_FAILURE);
-    mu_assert("Inserting a duplicate should return _MAP_SUCCESS_REPLACED", ret == _MAP_SUCCESS_REPLACED);
+    mu_assert("Failed to insert duplicate key.", ret != _CDST_FAILURE);
+    mu_assert("Inserting a duplicate should return _CDST_SUCCESS_REPLACED", ret == _CDST_SUCCESS_REPLACED);
     mu_assert("After reinsertion, size should be 1", bt_size(tree) == 1);
 
     from_tree = bt_get(tree, key);
@@ -91,7 +91,7 @@ mu_test(test_bst_add_duplicate) {
 }
 
 mu_test(test_bst_add_4) {
-    int ret = _MAP_SUCCESS;
+    int ret = _CDST_SUCCESS;
     BinTree *tree = NULL;
     size_t s = sizeof(int);
 
@@ -99,7 +99,7 @@ mu_test(test_bst_add_4) {
 
     // Construct the tree
     ret = bt_init(&tree);
-    mu_assert("Failed to initialize tree.", ret == _MAP_SUCCESS);
+    mu_assert("Failed to initialize tree.", ret == _CDST_SUCCESS);
 
     // Insert the entries
     mu_assert("Failed to add ('c', 1) to the tree.", ret = bt_add(tree, "c", &(data[0]), s));
@@ -122,7 +122,7 @@ mu_test(test_bst_add_4) {
 }
 
 mu_test(test_bst_remove_empty) {
-    int ret = _MAP_SUCCESS;
+    int ret = _CDST_SUCCESS;
     BinTree *tree = NULL;
 
     // Remove nonexistent key from empty tree
@@ -137,7 +137,7 @@ mu_test(test_bst_remove_empty) {
 }
 
 mu_test(tst_bst_remove_multiple) {
-    int ret = _MAP_SUCCESS;
+    int ret = _CDST_SUCCESS;
     BinTree *tree = NULL;
     size_t s = sizeof(int);
 
@@ -163,10 +163,10 @@ mu_test(tst_bst_remove_multiple) {
                   f
     */
     ret = bt_init(&tree);
-    mu_assert("bt_init() failed.", ret != _MAP_FAILURE);
+    mu_assert("bt_init() failed.", ret != _CDST_FAILURE);
     for (int i = 0; i < num_entries; i++) {
         ret = bt_add(tree, keys[i], &data[i], s);
-        mu_assert("Insertion failed.", ret == _MAP_SUCCESS);
+        mu_assert("Insertion failed.", ret == _CDST_SUCCESS);
         mu_assert("Incorrect size after insertion.", bt_size(tree) == i + 1);
         mu_assert("Entry does not exist in tree after insertion.", bt_has(tree, keys[i]));
     }
@@ -182,7 +182,7 @@ mu_test(tst_bst_remove_multiple) {
                   f
     */
     ret = bt_remove(tree, b);
-    mu_assert("bt_remove(tree, 'b') failed.", ret == _MAP_SUCCESS);
+    mu_assert("bt_remove(tree, 'b') failed.", ret == _CDST_SUCCESS);
     mu_assert("Incorrect size after removing 'b', should be 6", bt_size(tree) == 6);
     mu_assert("Key 'b' exists in tree after removal", !bt_has(tree, b));
 
@@ -197,7 +197,7 @@ mu_test(tst_bst_remove_multiple) {
                   f
     */
     ret = bt_remove(tree, g);
-    mu_assert("bt_remove(tree, 'g') failed.", ret == _MAP_SUCCESS);
+    mu_assert("bt_remove(tree, 'g') failed.", ret == _CDST_SUCCESS);
     mu_assert("Incorrect size after removing 'g', should be 5", bt_size(tree) == 5);
     mu_assert("Key 'g' exists in tree after removal", !bt_has(tree, g));
     // e, f, and h should still be in tree
@@ -215,7 +215,7 @@ mu_test(tst_bst_remove_multiple) {
     */
 
     ret = bt_remove(tree, d);
-    mu_assert("bt_remove(tree, 'd') failed.", ret == _MAP_SUCCESS);
+    mu_assert("bt_remove(tree, 'd') failed.", ret == _CDST_SUCCESS);
     mu_assert("Incorrect size after removing 'd', should be 4", bt_size(tree) == 4);
     mu_assert("Key 'd' exists in tree after removal", !bt_has(tree, d));
     // a, e, f, and h should still be in tree
@@ -234,7 +234,7 @@ mu_test(tst_bst_remove_multiple) {
     */
 
     ret = bt_remove(tree, a);
-    mu_assert("bt_remove(tree, 'a') failed.", ret == _MAP_SUCCESS);
+    mu_assert("bt_remove(tree, 'a') failed.", ret == _CDST_SUCCESS);
     mu_assert("Incorrect size after removing 'a', should be 3", bt_size(tree) == 3);
     mu_assert("Key 'a' exists in tree after removal", !bt_has(tree, a));
     // e, f, and h should still be in tree

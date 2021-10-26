@@ -20,7 +20,7 @@
 
 #include <stdlib.h>
 
-#include "map.h"
+#include "common.h"
 
 /**
  * @brief A Binary Search Tree storing key/value pairs.

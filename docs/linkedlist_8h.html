@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>C Data Structures: src/map/linkedlist.h File Reference</title>
+<title>C Data Structures: src/lists/linkedlist.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -60,11 +60,12 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_391513bbec656ad0f0b1433a02685683.html">map</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_cb12f50c2f20327f019ffa7ab4cce39c.html">lists</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
@@ -72,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>A key/value map implemented as a Linked List.  
+<p>A key/value map implemented with a Doubly Linked List.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &quot;map.h&quot;</code><br />
@@ -81,311 +82,64 @@ $(function() {
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><img src="linkedlist_8h__incl.png" border="0" usemap="#src_2map_2linkedlist_8h" alt=""/></div>
-<map name="src_2map_2linkedlist_8h" id="src_2map_2linkedlist_8h">
+<div class="center"><img src="linkedlist_8h__incl.png" border="0" usemap="#src_2lists_2linkedlist_8h" alt=""/></div>
+<map name="src_2lists_2linkedlist_8h" id="src_2lists_2linkedlist_8h">
 <area shape="rect" id="node3" href="map_8h_source.html" title="map.h" alt="" coords="100,80,163,107"/>
 </map>
 </div>
 </div>
 <p><a href="linkedlist_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structll__generic__ent.html">ll_generic_ent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A stored entry in a <a class="el" href="group__ll.html#gafafe29664d6a6c0da3ef6c87774cc17f">LinkedList</a>.  <a href="structll__generic__ent.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:afafe29664d6a6c0da3ef6c87774cc17f"><td class="memItemLeft" align="right" valign="top"><a id="afafe29664d6a6c0da3ef6c87774cc17f"></a>
-typedef struct <a class="el" href="structll__linkedlist.html">ll_linkedlist</a>&#160;</td><td class="memItemRight" valign="bottom"><b>LinkedList</b></td></tr>
-<tr class="separator:afafe29664d6a6c0da3ef6c87774cc17f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafafe29664d6a6c0da3ef6c87774cc17f"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structll__linkedlist.html">ll_linkedlist</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ll.html#gafafe29664d6a6c0da3ef6c87774cc17f">LinkedList</a></td></tr>
+<tr class="memdesc:gafafe29664d6a6c0da3ef6c87774cc17f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A doubly linked list.  <a href="group__ll.html#gafafe29664d6a6c0da3ef6c87774cc17f">More...</a><br /></td></tr>
+<tr class="separator:gafafe29664d6a6c0da3ef6c87774cc17f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga939b75476ce4e415d3bae897d56b3450"><td class="memItemLeft" align="right" valign="top">
+typedef struct <a class="el" href="structll__generic__ent.html">ll_generic_ent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ll.html#ga939b75476ce4e415d3bae897d56b3450">GenericLLEntry</a></td></tr>
+<tr class="memdesc:ga939b75476ce4e415d3bae897d56b3450"><td class="mdescLeft">&#160;</td><td class="mdescRight">A stored entry in a <a class="el" href="group__ll.html#gafafe29664d6a6c0da3ef6c87774cc17f">LinkedList</a>. <br /></td></tr>
+<tr class="separator:ga939b75476ce4e415d3bae897d56b3450"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a02f3896a677b419cd8a79e9ea37283e5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linkedlist_8h.html#a02f3896a677b419cd8a79e9ea37283e5">ll_new</a> (<a class="el" href="structll__linkedlist.html">LinkedList</a> **ll)</td></tr>
-<tr class="memdesc:a02f3896a677b419cd8a79e9ea37283e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new LinkedList.  <a href="#a02f3896a677b419cd8a79e9ea37283e5">More...</a><br /></td></tr>
-<tr class="separator:a02f3896a677b419cd8a79e9ea37283e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeea33ea9e58f3434a6367dc511481a34"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linkedlist_8h.html#aeea33ea9e58f3434a6367dc511481a34">ll_free</a> (<a class="el" href="structll__linkedlist.html">LinkedList</a> **ll)</td></tr>
-<tr class="memdesc:aeea33ea9e58f3434a6367dc511481a34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys a LinkedList, freeing all resources associated with it.  <a href="#aeea33ea9e58f3434a6367dc511481a34">More...</a><br /></td></tr>
-<tr class="separator:aeea33ea9e58f3434a6367dc511481a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f6237c0abf9ce3d7db81c5c4fa24240"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linkedlist_8h.html#a7f6237c0abf9ce3d7db81c5c4fa24240">ll_add</a> (<a class="el" href="structll__linkedlist.html">LinkedList</a> *ll, char *key, void *data, size_t size)</td></tr>
-<tr class="memdesc:a7f6237c0abf9ce3d7db81c5c4fa24240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a key/value entry into a LinkedList.  <a href="#a7f6237c0abf9ce3d7db81c5c4fa24240">More...</a><br /></td></tr>
-<tr class="separator:a7f6237c0abf9ce3d7db81c5c4fa24240"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55ed040bb475ec26ca8cfc4a69660acd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linkedlist_8h.html#a55ed040bb475ec26ca8cfc4a69660acd">ll_get</a> (<a class="el" href="structll__linkedlist.html">LinkedList</a> *ll, char *key, void *dst)</td></tr>
-<tr class="memdesc:a55ed040bb475ec26ca8cfc4a69660acd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves an entry stored in the list.  <a href="#a55ed040bb475ec26ca8cfc4a69660acd">More...</a><br /></td></tr>
-<tr class="separator:a55ed040bb475ec26ca8cfc4a69660acd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a537c15740e5d40f6da092e2ef0a35a49"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linkedlist_8h.html#a537c15740e5d40f6da092e2ef0a35a49">ll_remove</a> (<a class="el" href="structll__linkedlist.html">LinkedList</a> *ll, char *key)</td></tr>
-<tr class="memdesc:a537c15740e5d40f6da092e2ef0a35a49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an entry stored in a LinkedList.  <a href="#a537c15740e5d40f6da092e2ef0a35a49">More...</a><br /></td></tr>
-<tr class="separator:a537c15740e5d40f6da092e2ef0a35a49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c20d58faf99a707b9e2d0b2198267bc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linkedlist_8h.html#a1c20d58faf99a707b9e2d0b2198267bc">ll_contains</a> (<a class="el" href="structll__linkedlist.html">LinkedList</a> *l, char *key)</td></tr>
-<tr class="memdesc:a1c20d58faf99a707b9e2d0b2198267bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an entry exists for a key.  <a href="#a1c20d58faf99a707b9e2d0b2198267bc">More...</a><br /></td></tr>
-<tr class="separator:a1c20d58faf99a707b9e2d0b2198267bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6492e1fe56786daee3da4dfc6349d042"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="linkedlist_8h.html#a6492e1fe56786daee3da4dfc6349d042">ll_size</a> (<a class="el" href="structll__linkedlist.html">LinkedList</a> *l)</td></tr>
-<tr class="memdesc:a6492e1fe56786daee3da4dfc6349d042"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of entries stored in a LinkedList.  <a href="#a6492e1fe56786daee3da4dfc6349d042">More...</a><br /></td></tr>
-<tr class="separator:a6492e1fe56786daee3da4dfc6349d042"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02f3896a677b419cd8a79e9ea37283e5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ll.html#ga02f3896a677b419cd8a79e9ea37283e5">ll_new</a> (<a class="el" href="group__ll.html#gafafe29664d6a6c0da3ef6c87774cc17f">LinkedList</a> **ll)</td></tr>
+<tr class="memdesc:ga02f3896a677b419cd8a79e9ea37283e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new LinkedList.  <a href="group__ll.html#ga02f3896a677b419cd8a79e9ea37283e5">More...</a><br /></td></tr>
+<tr class="separator:ga02f3896a677b419cd8a79e9ea37283e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeea33ea9e58f3434a6367dc511481a34"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ll.html#gaeea33ea9e58f3434a6367dc511481a34">ll_free</a> (<a class="el" href="group__ll.html#gafafe29664d6a6c0da3ef6c87774cc17f">LinkedList</a> **ll)</td></tr>
+<tr class="memdesc:gaeea33ea9e58f3434a6367dc511481a34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys a LinkedList, freeing all resources associated with it.  <a href="group__ll.html#gaeea33ea9e58f3434a6367dc511481a34">More...</a><br /></td></tr>
+<tr class="separator:gaeea33ea9e58f3434a6367dc511481a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f6237c0abf9ce3d7db81c5c4fa24240"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ll.html#ga7f6237c0abf9ce3d7db81c5c4fa24240">ll_add</a> (<a class="el" href="group__ll.html#gafafe29664d6a6c0da3ef6c87774cc17f">LinkedList</a> *ll, char *key, void *data, size_t size)</td></tr>
+<tr class="memdesc:ga7f6237c0abf9ce3d7db81c5c4fa24240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a key/value entry into a LinkedList.  <a href="group__ll.html#ga7f6237c0abf9ce3d7db81c5c4fa24240">More...</a><br /></td></tr>
+<tr class="separator:ga7f6237c0abf9ce3d7db81c5c4fa24240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55ed040bb475ec26ca8cfc4a69660acd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ll.html#ga55ed040bb475ec26ca8cfc4a69660acd">ll_get</a> (<a class="el" href="group__ll.html#gafafe29664d6a6c0da3ef6c87774cc17f">LinkedList</a> *ll, char *key, void *dst)</td></tr>
+<tr class="memdesc:ga55ed040bb475ec26ca8cfc4a69660acd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves an entry stored in the list.  <a href="group__ll.html#ga55ed040bb475ec26ca8cfc4a69660acd">More...</a><br /></td></tr>
+<tr class="separator:ga55ed040bb475ec26ca8cfc4a69660acd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga537c15740e5d40f6da092e2ef0a35a49"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ll.html#ga537c15740e5d40f6da092e2ef0a35a49">ll_remove</a> (<a class="el" href="group__ll.html#gafafe29664d6a6c0da3ef6c87774cc17f">LinkedList</a> *ll, char *key)</td></tr>
+<tr class="memdesc:ga537c15740e5d40f6da092e2ef0a35a49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an entry stored in a LinkedList.  <a href="group__ll.html#ga537c15740e5d40f6da092e2ef0a35a49">More...</a><br /></td></tr>
+<tr class="separator:ga537c15740e5d40f6da092e2ef0a35a49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c20d58faf99a707b9e2d0b2198267bc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ll.html#ga1c20d58faf99a707b9e2d0b2198267bc">ll_contains</a> (<a class="el" href="group__ll.html#gafafe29664d6a6c0da3ef6c87774cc17f">LinkedList</a> *l, char *key)</td></tr>
+<tr class="memdesc:ga1c20d58faf99a707b9e2d0b2198267bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an entry exists for a key.  <a href="group__ll.html#ga1c20d58faf99a707b9e2d0b2198267bc">More...</a><br /></td></tr>
+<tr class="separator:ga1c20d58faf99a707b9e2d0b2198267bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6492e1fe56786daee3da4dfc6349d042"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ll.html#ga6492e1fe56786daee3da4dfc6349d042">ll_size</a> (<a class="el" href="group__ll.html#gafafe29664d6a6c0da3ef6c87774cc17f">LinkedList</a> *l)</td></tr>
+<tr class="memdesc:ga6492e1fe56786daee3da4dfc6349d042"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of entries stored in a LinkedList.  <a href="group__ll.html#ga6492e1fe56786daee3da4dfc6349d042">More...</a><br /></td></tr>
+<tr class="separator:ga6492e1fe56786daee3da4dfc6349d042"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A key/value map implemented as a Linked List. </p>
+<div class="textblock"><p>A key/value map implemented with a Doubly Linked List. </p>
 <dl class="section author"><dt>Author</dt><dd>Donald Isaac </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>0.0.1 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2021-09-23 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2021. MIT License </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a7f6237c0abf9ce3d7db81c5c4fa24240"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f6237c0abf9ce3d7db81c5c4fa24240">&#9670;&nbsp;</a></span>ll_add()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int ll_add </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structll__linkedlist.html">LinkedList</a> *&#160;</td>
-          <td class="paramname"><em>ll</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Inserts a key/value entry into a LinkedList. </p>
-<p>Entry keys must be unique. If an entry already exists under the desired key, this function fails.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ll</td><td>The list to insert into. </td></tr>
-    <tr><td class="paramname">key</td><td>The entry key. Can be used later to locate this entry. </td></tr>
-    <tr><td class="paramname">data</td><td>The data stored in the entry. </td></tr>
-    <tr><td class="paramname">size</td><td>The size of <code>data</code></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>1 on success or 0 on failure </dd></dl>
-
-</div>
-</div>
-<a id="a1c20d58faf99a707b9e2d0b2198267bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c20d58faf99a707b9e2d0b2198267bc">&#9670;&nbsp;</a></span>ll_contains()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int ll_contains </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structll__linkedlist.html">LinkedList</a> *&#160;</td>
-          <td class="paramname"><em>l</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>key</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Checks if an entry exists for a key. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">l</td><td>The list to check. </td></tr>
-    <tr><td class="paramname">key</td><td>The entry key.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>1 if the list contains an entry under <code>key</code>, 0 if it does not. On error, <code>errno</code> is set and -1 is returned. </dd></dl>
-
-</div>
-</div>
-<a id="aeea33ea9e58f3434a6367dc511481a34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeea33ea9e58f3434a6367dc511481a34">&#9670;&nbsp;</a></span>ll_free()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int ll_free </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structll__linkedlist.html">LinkedList</a> **&#160;</td>
-          <td class="paramname"><em>ll</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Destroys a LinkedList, freeing all resources associated with it. </p>
-<p>After destruction, the list pointed to by <code>ll</code> will be set to <code>NULL</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ll</td><td>Pointer to the list to destroy.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>0 on success or an error code on failure. </dd></dl>
-
-</div>
-</div>
-<a id="a55ed040bb475ec26ca8cfc4a69660acd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55ed040bb475ec26ca8cfc4a69660acd">&#9670;&nbsp;</a></span>ll_get()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int ll_get </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structll__linkedlist.html">LinkedList</a> *&#160;</td>
-          <td class="paramname"><em>ll</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>dst</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Retrieves an entry stored in the list. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ll</td><td>The list to retrieve the entry from. </td></tr>
-    <tr><td class="paramname">key</td><td>The entry key. </td></tr>
-    <tr><td class="paramname">dst</td><td>Where to put the data stored under <code>key</code>, if found.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>1 if the entry is found. If no entry exists under the desired key, 0 is returned. If an error occurs, <code>errno</code> is set and -1 is returned. </dd></dl>
-
-</div>
-</div>
-<a id="a02f3896a677b419cd8a79e9ea37283e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02f3896a677b419cd8a79e9ea37283e5">&#9670;&nbsp;</a></span>ll_new()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int ll_new </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structll__linkedlist.html">LinkedList</a> **&#160;</td>
-          <td class="paramname"><em>ll</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructs a new LinkedList. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ll</td><td>Pointer to the list to initialize.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>1 if a new LinkedList is successfully created. On error, <code>errno</code> is set and 0 is returned. </dd></dl>
-
-</div>
-</div>
-<a id="a537c15740e5d40f6da092e2ef0a35a49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a537c15740e5d40f6da092e2ef0a35a49">&#9670;&nbsp;</a></span>ll_remove()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int ll_remove </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structll__linkedlist.html">LinkedList</a> *&#160;</td>
-          <td class="paramname"><em>ll</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>key</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Removes an entry stored in a LinkedList. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ll</td><td>The list to remove the entry from. </td></tr>
-    <tr><td class="paramname">key</td><td>The entry key.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>1 if an entry exists under the key and is successfully removed. If no entry exists, 0 is returned. On error, <code>errno</code> is set and -1 is returned. </dd></dl>
-
-</div>
-</div>
-<a id="a6492e1fe56786daee3da4dfc6349d042"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6492e1fe56786daee3da4dfc6349d042">&#9670;&nbsp;</a></span>ll_size()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int ll_size </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structll__linkedlist.html">LinkedList</a> *&#160;</td>
-          <td class="paramname"><em>l</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the number of entries stored in a LinkedList. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">l</td><td>The list to get the size of.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The size of the list. On error, <code>errno</code> is set and -1 is returned. </dd></dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Sep 29 2021 11:13:37 for C Data Structures by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 2 2021 11:44:14 for C Data Structures by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>
