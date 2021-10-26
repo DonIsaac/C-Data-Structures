@@ -15,7 +15,7 @@ mu_test(test_bst_empty) {
     int ret = _MAP_SUCCESS;
     BinTree *tree = NULL;
 
-    ret = bt_init(&tree);
+    ret = bt_init(&tree, key_string);
 
     mu_assert("Failed to initialize tree.", ret == _MAP_SUCCESS);
     mu_assert("Empty tree's height is not 0.", bt_height(tree) == 0);
@@ -31,11 +31,12 @@ mu_test(test_bst_empty) {
 mu_test(test_bst_add_and_remove_1) {
     int ret = _MAP_SUCCESS;
     BinTree *tree = NULL;
-    char *key = "key";
+    key_t key = {.type = key_string, .key_s = "key"};
+    // key_t key = keys("key");
     int data = 5;
     int *data_from_tree = NULL;
 
-    ret = bt_init(&tree);
+    ret = bt_init(&tree, key_string);
     mu_assert("Failed to initialize tree.", ret == _MAP_SUCCESS);
 
     // test insertion
@@ -66,12 +67,12 @@ mu_test(test_bst_add_and_remove_1) {
 mu_test(test_bst_add_duplicate) {
     int ret = _MAP_SUCCESS;
     BinTree *tree = NULL;
-    char *key = "key";
+    key_t key = {.type = key_string, .key_s = "key"};
     int data1 = 10, data2 = 5;
     int *from_tree = NULL;
 
     // Construct the tree
-    ret = bt_init(&tree);
+    ret = bt_init(&tree, key_string);
     mu_assert("Failed to initialize tree.", ret == _MAP_SUCCESS);
 
     // test insertion
@@ -98,24 +99,25 @@ mu_test(test_bst_add_4) {
     int data[4] = {1, 2, 3, 4};
 
     // Construct the tree
-    ret = bt_init(&tree);
+    ret = bt_init(&tree, key_string);
     mu_assert("Failed to initialize tree.", ret == _MAP_SUCCESS);
+    key_t a = keys("a"), b = keys("b"), c = keys("c"), d = keys("d");
 
     // Insert the entries
-    mu_assert("Failed to add ('c', 1) to the tree.", ret = bt_add(tree, "c", &(data[0]), s));
-    mu_assert("Failed to add ('a', 2) to the tree.", ret = bt_add(tree, "a", &(data[1]), s));
-    mu_assert("Failed to add ('d', 3) to the tree.", ret = bt_add(tree, "d", &(data[2]), s));
-    mu_assert("Failed to add ('b', 4) to the tree.", ret = bt_add(tree, "b", &(data[3]), s));
+    mu_assert("Failed to add ('c', 1) to the tree.", ret = bt_add(tree, c, &(data[0]), s));
+    mu_assert("Failed to add ('a', 2) to the tree.", ret = bt_add(tree, a, &(data[1]), s));
+    mu_assert("Failed to add ('d', 3) to the tree.", ret = bt_add(tree, d, &(data[2]), s));
+    mu_assert("Failed to add ('b', 4) to the tree.", ret = bt_add(tree, b, &(data[3]), s));
 
     // Check tree properties
     mu_assert("Tree did not have a size of 4 after 4 insertions.", bt_size(tree) == 4);
     mu_assert("Tree did not have a height of 3 after 4 insertions", bt_height(tree) == 3);
 
     // Check that entries exist and are storing the correct values
-    mu_assert("Did not get a value of 1 from entry under key 'c'.", *((int *)bt_get(tree, "c")) == data[0]);
-    mu_assert("Did not get a value of 2 from entry under key 'a'.", *((int *)bt_get(tree, "a")) == data[1]);
-    mu_assert("Did not get a value of 3 from entry under key 'd'.", *((int *)bt_get(tree, "d")) == data[2]);
-    mu_assert("Did not get a value of 4 from entry under key 'b'.", *((int *)bt_get(tree, "b")) == data[3]);
+    mu_assert("Did not get a value of 1 from entry under key 'c'.", *((int *)bt_get(tree, c)) == data[0]);
+    mu_assert("Did not get a value of 2 from entry under key 'a'.", *((int *)bt_get(tree, a)) == data[1]);
+    mu_assert("Did not get a value of 3 from entry under key 'd'.", *((int *)bt_get(tree, d)) == data[2]);
+    mu_assert("Did not get a value of 4 from entry under key 'b'.", *((int *)bt_get(tree, b)) == data[3]);
 
     bt_free(&tree);
     return 0;
@@ -124,10 +126,11 @@ mu_test(test_bst_add_4) {
 mu_test(test_bst_remove_empty) {
     int ret = _MAP_SUCCESS;
     BinTree *tree = NULL;
+    key_t key = keys("foo");
 
     // Remove nonexistent key from empty tree
-    ret = bt_init(&tree);
-    ret = bt_remove(tree, "foo");
+    ret = bt_init(&tree, key_string);
+    ret = bt_remove(tree, key);
 
     mu_assert("When bt_remove is called on an empty tree, it should return 0", !ret);
     mu_assert("When bt_remove is called on an empty tree, it should have a size of 0", bt_size(tree) == 0);
@@ -142,15 +145,16 @@ mu_test(tst_bst_remove_multiple) {
     size_t s = sizeof(int);
 
 #define num_entries 7
-    char *keys[num_entries] = {"d", "b", "a", "g", "h", "e", "f"};
+    // char *keys[num_entries] = {"d", "b", "a", "g", "h", "e", "f"};
+    key_t keys[num_entries] = {keys("d"), keys("b"), keys("a"), keys("g"), keys("h"), keys("e"), keys("f")};
     int data[num_entries] = {1, 2, 3, 4, 5, 6, 7};
-    char *d = keys[0],
-         *b = keys[1],
-         *a = keys[2],
-         *g = keys[3],
-         *h = keys[4],
-         *e = keys[5],
-         *f = keys[6];
+    key_t d = keys[0],
+          b = keys[1],
+          a = keys[2],
+          g = keys[3],
+          h = keys[4],
+          e = keys[5],
+          f = keys[6];
 
     /*
         Create the following tree:
@@ -162,7 +166,7 @@ mu_test(tst_bst_remove_multiple) {
                  \
                   f
     */
-    ret = bt_init(&tree);
+    ret = bt_init(&tree, key_string);
     mu_assert("bt_init() failed.", ret != _MAP_FAILURE);
     for (int i = 0; i < num_entries; i++) {
         ret = bt_add(tree, keys[i], &data[i], s);
@@ -249,48 +253,49 @@ mu_test(tst_bst_remove_multiple) {
 mu_test(test_bst_min_max) {
     BinTree *tree = NULL;
     size_t s = sizeof(int);
-    char key[_BST_TEST_STRLEN] = {0};
+    char keystr[_BST_TEST_STRLEN] = {0};
+    key_t key = {.type = key_string, .key_s = keystr};
     int data;
 
     // char keys[5] = {"a", "b", "c", "d", "e"};
     // int data[5] = {1, 2, 3, 4, 5};
 
-    bt_init(&tree);
+    bt_init(&tree, key_string);
 
     // Empty trees have no min/max
     mu_assert("bt_max() should return NULL for empty trees.", bt_max(tree) == NULL);
     mu_assert("bt_min() should return NULL for empty trees.", bt_min(tree) == NULL);
 
     // Add (c, 1). Trees with 1 node have the same min/max
-    strcpy(key, "c");
+    strcpy(key.key_s, "c");
     data = 1;
     bt_add(tree, key, &data, s);
     mu_assert("Expected bt_max() to return *1 after inserting (c, 1).", *((int *)bt_max(tree)) == 1);
     mu_assert("Expected bt_min() to return *1 after inserting (c, 1).", *((int *)bt_min(tree)) == 1);
 
     // Add (e, 2)
-    strcpy(key, "e");
+    strcpy(key.key_s, "e");
     data = 2;
     bt_add(tree, key, &data, s);
     mu_assert("Expected bt_max() to return *2 after inserting (e, 2).", *((int *)bt_max(tree)) == 2);
     mu_assert("Expected bt_min() to return *1 after inserting (e, 2).", *((int *)bt_min(tree)) == 1);
 
     // Add (d, 3)
-    strcpy(key, "d");
+    strcpy(key.key_s, "d");
     data = 3;
     bt_add(tree, key, &data, s);
     mu_assert("Expected bt_max() to return *2 after inserting (d, 3).", *((int *)bt_max(tree)) == 2);
     mu_assert("Expected bt_min() to return *1 after inserting (d, 3).", *((int *)bt_min(tree)) == 1);
 
     // Add (a, 4)
-    strcpy(key, "a");
+    strcpy(key.key_s, "a");
     data = 4;
     bt_add(tree, key, &data, s);
     mu_assert("Expected bt_max() to return *1 after inserting (a, 4).", *((int *)bt_max(tree)) == 2);
     mu_assert("Expected bt_min() to return *4 after inserting (a, 4).", *((int *)bt_min(tree)) == 4);
 
     // Add (b, 5)
-    strcpy(key, "b");
+    strcpy(key.key_s, "b");
     data = 5;
     bt_add(tree, key, &data, s);
     mu_assert("Expected bt_max() to return *1 after inserting (b, 5).", *((int *)bt_max(tree)) == 2);

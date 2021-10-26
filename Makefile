@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 CC = gcc
-CFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c99 # LDLIBS=-lstdc++
+CFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c11 # LDLIBS=-lstdc++
 VPATH = src src/map test
 LDLIBS =
 
@@ -36,7 +36,7 @@ bst.report: bst
 
 # %.report: %
 # 	gcov test/$<.c
-bst: test/bst.o src/map/bintree.o
+bst: test/bst.o src/map/bintree.o src/map/mapkey.o
 
 vector.report: vector
 	valgrind --leak-check=full ./vector
@@ -60,9 +60,7 @@ check-deps.target:
 	@touch check-deps.target
 
 lint: check-deps
-	clang-format -i \
-	$(addsuffix *.c, $(FOLDERS)) \
-	$(addsuffix *.h, $(FOLDERS))
+	clang-format -i $$(find . -name '*.c' -or -name '*.h' -type f)
 
 clean:
 	$(RM) -rf \

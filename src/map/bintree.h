@@ -50,7 +50,7 @@ typedef struct bt_bintree BinTree;
  *
  * @return int 1 on success, 0 on failure.
  */
-int bt_init(BinTree **tree);
+int bt_init(BinTree **tree, keytype_t keytype);
 
 /**
  * @brief Destroys an existing Bintree and frees all resources associated with it.
@@ -66,12 +66,14 @@ void bt_free(BinTree **tree);
 /**
  * @brief Calculates the height of a BinTree.
  *
+ * Empty trees have a height of 0. If the tree has a single node, its height
+ * is 1.
+ *
  * @ingroup bt
  *
  * @param tree The target tree.
  *
- * @return int The height of the tree, or 0 on failure. Check `errno` to
- * distinguish between a tree with a height of `0` and failures.
+ * @return int The height of the tree, or -1 on failure.
  */
 int bt_height(BinTree *tree);
 
@@ -82,7 +84,7 @@ int bt_height(BinTree *tree);
  *
  * @param tree The target tree.
  *
- * @return int The number of entries in the tree. On failure, 0 is returned.
+ * @return int The number of entries in the tree. On failure, -1 is returned.
  * To distinguish between a tree with no entries and a failure, check `errno`.
  */
 int bt_size(BinTree *tree);
@@ -131,7 +133,7 @@ void *bt_max(BinTree *tree);
  * @return int A positive number on success, 0 on failure. If an existing entry
  * is replaced, 2 is returned.
  */
-int bt_add(BinTree *tree, char *key, void *data, size_t size);
+int bt_add(BinTree *tree, key_t key, void *data, size_t size);
 
 /**
  * @brief Searches the BinTree for an entry.
@@ -151,7 +153,7 @@ int bt_add(BinTree *tree, char *key, void *data, size_t size);
  * for the given key, `NULL` is returned. On error, `NULL` is returned and
  * `errno` is set.
  */
-void *bt_get(BinTree *tree, char *key);
+void *bt_get(BinTree *tree, key_t key);
 
 // void *bt_get_min(BinTree *tree);
 // void *bt_get_max(BinTree *tree);
@@ -166,7 +168,7 @@ void *bt_get(BinTree *tree, char *key);
  *
  * @return int 1 if an entry exists for `key`, 0 if one does not.
  */
-int bt_has(BinTree *tree, char *key);
+int bt_has(BinTree *tree, key_t key);
 
 /**
  * @brief Removes an entry from a BinTree, freeing its memory resources.
@@ -180,5 +182,5 @@ int bt_has(BinTree *tree, char *key);
  * exists for the given key, 0 is returned. On error, 0 is returned and `errno`
  * is set.
  */
-int bt_remove(BinTree *tree, char *key);
+int bt_remove(BinTree *tree, key_t key);
 #endif

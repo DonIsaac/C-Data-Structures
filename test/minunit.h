@@ -22,19 +22,34 @@ struct mu_res {
     const char *assertion;
 };
 
+#define MU_TEST_INIT \
+    int tests_failed = 0, tests_run = 0, num_assertions = 0;
+
 #define mu_test(name) static struct mu_res *name()
-#define mu_assert(message, test)                 \
-    do {                                         \
-        num_assertions++;                        \
-        if (!(test)) {                           \
-            struct mu_res *ret = {0};            \
-            ret = malloc(sizeof(struct mu_res)); \
-            ret->file = __FILE__;                \
-            ret->line = __LINE__;                \
-            ret->msg = message;                  \
-            ret->assertion = #test;              \
-            return ret;                          \
-        }                                        \
+
+#define mu_assert(message, test)                                  \
+    do {                                                          \
+        num_assertions++;                                         \
+        if (!(test)) {                                            \
+            struct mu_res *ret = {0};                             \
+            ret = (struct mu_res *)malloc(sizeof(struct mu_res)); \
+            ret->file = __FILE__;                                 \
+            ret->line = __LINE__;                                 \
+            ret->msg = message;                                   \
+            ret->assertion = #test;                               \
+            return ret;                                           \
+        }                                                         \
+    } while (0)
+
+#define mu_fail(message)                                      \
+    do {                                                      \
+        struct mu_res *ret = {0};                             \
+        ret = (struct mu_res *)malloc(sizeof(struct mu_res)); \
+        ret->file = __FILE__;                                 \
+        ret->line = __LINE__;                                 \
+        ret->msg = message;                                   \
+        ret->assertion = NULL;                                \
+        return ret;                                           \
     } while (0)
 
 #define mu_run_test(test)                                                                                 \
