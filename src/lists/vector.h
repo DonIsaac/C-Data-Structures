@@ -15,8 +15,8 @@
 #define VECTOR_H
 
 #include <inttypes.h>
-#include <stdlib.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 /**
  * @brief A Vector list
@@ -25,15 +25,15 @@
  */
 typedef struct _vector {
     /** @brief Array where data is stored. */
-	void *data;
+    void *data;
     /** @brief The running size of the data array. */
-	uint32_t size;
+    uint32_t size;
     /** @brief how many elementscan be held in the Vector. */
-	uint32_t capacity;
+    uint32_t capacity;
     /** @brief Size of the stored data. */
-	size_t data_size; 
+    size_t data_size;
 
-	/**
+    /**
 	 * @brief optional function to free data associated with element.
 	 *
 	 * i.e if element in data was struct with field `char *`; this function would
@@ -42,9 +42,9 @@ typedef struct _vector {
 	 *
 	 * @param An element of the Vector. 
 	 */
-	void (*free_element)(void *);
+    void (*free_element)(void *);
 
-} Vector; 
+} Vector;
 
 /**
  * @brief 
@@ -57,9 +57,9 @@ typedef struct _vector {
  * @param free_element
  *
  */
-void vector_init(Vector *v, uint32_t capacity, 
-	size_t data_size, 
-	void (*free_element)(void *));
+void vector_init(Vector *v, uint32_t capacity,
+                 size_t data_size,
+                 void (*free_element)(void *));
 
 /**
  * @brief 
@@ -85,8 +85,6 @@ void vector_popback(Vector *v);
  * @param index
  */
 void vector_set(Vector *v, void *data, size_t index);
-
-
 
 /**
  * @brief Gets the data stored in a list entry.
@@ -135,9 +133,5 @@ void vector_pushback(Vector *v, void *datum);
  * @param v
  */
 void vector_free(Vector *v);
-
-
-
-
 
 #endif

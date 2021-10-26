@@ -3,4 +3,4 @@
 -Wconversion
 -pedantic
 -Iincludes
--std=c99
+-std=c11
