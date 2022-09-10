@@ -8,14 +8,16 @@ CPP = g++
 # Linux
 LINUX_CFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c99 # LDLIBS=-lstdc++
 LINUX_CXXFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c++17 # LDLIBS=-lstdc++
-LINUX_DEBUGFLAGS = -DDEBUG -ggdb -fprofile-arcs -ftest-coverage
 LINUX_PRODFLAGS = -02 -DNDEBUG
+LINUX_DEBUGFLAGS = -DDEBUG -ggdb -fprofile-arcs -ftest-coverage
+LINUX_DEBUG_LDLIBS = -lgcov --coverage
 
 # MacOS
 MACOS_CFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c99
 MACOS_CXXFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c++17
-MACOS_DEBUGFLAGS = -DDEBUG -g 
 MACOS_PRODFLAGS = -02 -DNDEBUG
+MACOS_DEBUGFLAGS = -DDEBUG -g 
+MACOS_DEBUG_LDLIBS =
 
 # Windows
 # todo
@@ -56,13 +58,16 @@ else
 	ifeq ($(UNAME_S),Linux)
 		CFLAGS += $(LINUX_CFLAGS)
 		CXXFLAGS += $(LINUX_CXXFLAGS)
-		DEBUGFLAGS += $(LINUX_DEBUGFLAGS)
 		PRODFLAGS += $(LINUX_PRODFLAGS)
+		DEBUGFLAGS += $(LINUX_DEBUGFLAGS)
+		DEBUG_LDLIBS += $(LINUX_DEBUG_LDLIBS)
 	else
 		CFLAGS += $(MACOS_CFLAGS)
 		CXXFLAGS += $(MACOS_CXXFLAGS)
-		DEBUGFLAGS += $(MACOS_DEBUGFLAGS)
 		PRODFLAGS += $(MACOS_PRODFLAGS)
+		DEBUGFLAGS += $(MACOS_DEBUGFLAGS)
+		DEBUG_LDFLAGS += $(MACOS_DEBUG_LDFLAGS)
+
 	endif
 endif
 
@@ -70,7 +75,7 @@ endif
 ifdef DEBUG
 	CFLAGS += $(DEBUGFLAGS)
 	CXXFLAGS += $(DEBUGFLAGS)
-	LDLIBS += -lgcov --coverage
+	LDLIBS += $(DEBUG_LDLIBS)
 
 # Disable assert macro and optimize output
 else ifdef PROD

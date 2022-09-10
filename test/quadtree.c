@@ -24,7 +24,7 @@ mu_test(test_qt_simple_add) {
     mu_assert("QuadTree should have a size of 1 after adding an element", qt_size(tree) == 1);
 
     char* result = qt_get(tree, key);
-    mu_assert("qt_get should not return null when retrieving a stored key", data != NULL);
+    mu_assert("qt_get should not return null when retrieving a stored key", result != NULL);
     mu_assert("qt_get should return the same data that was stored", strcmp(data, result) == 0);
 
     return MU_TEST_PASS;

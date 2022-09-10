@@ -105,7 +105,7 @@ void *_qt_node_get(qt_node *node, qt_key_t key) {
     if (node == NULL) return NULL;
 
     // If the key is in the tree, return the data
-    if (pointd_eq(node->key, key) == 0) {
+    if (pointd_eq(node->key, key)) {
         return node->data;
     }
 
@@ -192,8 +192,6 @@ int qt_size(QuadTree *tree) {
     if (tree == NULL || tree->root == NULL) return 0;
 
     return _qt_node_size(tree->root);
-    
-    return -1;
 }
 
 map_status_t qt_add(QuadTree *tree, qt_key_t key, void *data, size_t size) {
