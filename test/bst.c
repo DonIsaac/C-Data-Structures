@@ -25,7 +25,7 @@ mu_test(test_bst_empty) {
     mu_assert("After bt_free(), tree should be NULL.", tree == NULL);
 
     bt_free(&tree);
-    return 0;
+    return MU_TEST_PASS;
 }
 
 mu_test(test_bst_add_and_remove_1) {
@@ -60,7 +60,7 @@ mu_test(test_bst_add_and_remove_1) {
     mu_assert("After removal, bt_has() should return false.", !bt_has(tree, key));
 
     bt_free(&tree);
-    return 0;
+    return MU_TEST_PASS;
 }
 
 mu_test(test_bst_add_duplicate) {
@@ -87,7 +87,7 @@ mu_test(test_bst_add_duplicate) {
     mu_assert("After reinsertion, data should be most recent value", *from_tree == data2);
 
     bt_free(&tree);
-    return 0;
+    return MU_TEST_PASS;
 }
 
 mu_test(test_bst_add_4) {
@@ -118,7 +118,7 @@ mu_test(test_bst_add_4) {
     mu_assert("Did not get a value of 4 from entry under key 'b'.", *((int *)bt_get(tree, "b")) == data[3]);
 
     bt_free(&tree);
-    return 0;
+    return MU_TEST_PASS;
 }
 
 mu_test(test_bst_remove_empty) {
@@ -133,7 +133,7 @@ mu_test(test_bst_remove_empty) {
     mu_assert("When bt_remove is called on an empty tree, it should have a size of 0", bt_size(tree) == 0);
 
     bt_free(&tree);
-    return 0;
+    return MU_TEST_PASS;
 }
 
 mu_test(tst_bst_remove_multiple) {
@@ -243,7 +243,7 @@ mu_test(tst_bst_remove_multiple) {
     mu_assert("Key 'h' is not in tree after removing 'a'.", bt_has(tree, h));
 
     bt_free(&tree);
-    return 0;
+    return MU_TEST_PASS;
 }
 
 mu_test(test_bst_min_max) {
@@ -297,7 +297,7 @@ mu_test(test_bst_min_max) {
     mu_assert("Expected bt_min() to return *4 after inserting (b, 5).", *((int *)bt_min(tree)) == 4);
 
     bt_free(&tree);
-    return 0;
+    return MU_TEST_PASS;
 }
 
 void all_tests() {

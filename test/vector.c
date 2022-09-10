@@ -17,7 +17,7 @@ mu_test(test_vector_empty) {
 
     vector_free(&v);
 
-    return 0;
+    return MU_TEST_PASS;
 }
 
 mu_test(test_vector_grow) {
@@ -36,7 +36,7 @@ mu_test(test_vector_grow) {
 
     vector_free(&v);
 
-    return 0;
+    return MU_TEST_PASS;
 }
 
 mu_test(test_vector_grow_and_delete) {
@@ -51,7 +51,7 @@ mu_test(test_vector_grow_and_delete) {
         mu_assert("Push back resulted in bad size", v.size == (uint32_t)(100 - i - 1));
     }
     vector_free(&v);
-    return 0;
+    return MU_TEST_PASS;
 }
 
 typedef struct _n {
@@ -81,14 +81,14 @@ mu_test(test_vector_free_element) {
 
     vector_free(&v);
 
-    return 0;
+    return MU_TEST_PASS;
 }
 
 void all_tests() {
     mu_run_test(test_vector_empty);
     mu_run_test(test_vector_grow);
     mu_run_test(test_vector_grow_and_delete);
-    mu_run_test(test_vector_free_element)
+    mu_run_test(test_vector_free_element);
 }
 
 int main() {
@@ -103,3 +103,4 @@ int main() {
         return EXIT_FAILURE;
     }
 }
+
