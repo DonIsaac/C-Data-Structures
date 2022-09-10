@@ -50,7 +50,7 @@ typedef struct bt_bintree BinTree;
  *
  * @return int 1 on success, 0 on failure.
  */
-int bt_init(BinTree **tree);
+map_status_t bt_init(BinTree **tree);
 
 /**
  * @brief Destroys an existing Bintree and frees all resources associated with it.
@@ -131,7 +131,7 @@ void *bt_max(BinTree *tree);
  * @return int A positive number on success, 0 on failure. If an existing entry
  * is replaced, 2 is returned.
  */
-int bt_add(BinTree *tree, char *key, void *data, size_t size);
+map_status_t bt_add(BinTree *tree, char *key, void *data, size_t size);
 
 /**
  * @brief Searches the BinTree for an entry.
@@ -180,5 +180,5 @@ int bt_has(BinTree *tree, char *key);
  * exists for the given key, 0 is returned. On error, 0 is returned and `errno`
  * is set.
  */
-int bt_remove(BinTree *tree, char *key);
+map_status_t bt_remove(BinTree *tree, char *key);
 #endif
