@@ -5,6 +5,7 @@
 # Binaries
 bst
 vector
+quadtree
 
 # Temporary files
 *.tmp

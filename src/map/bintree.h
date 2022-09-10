@@ -53,7 +53,7 @@ typedef struct bt_bintree BinTree;
 map_status_t bt_init(BinTree **tree);
 
 /**
- * @brief Destroys an existing Bintree and frees all resources associated with it.
+ * @brief Destroys an existing BinTree and frees all resources associated with it.
  *
  * After destruction, the BinTree will be set to `NULL`.
  *

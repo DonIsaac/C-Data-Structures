@@ -30,7 +30,7 @@ LDLIBS =
 # Binaries used by various commands
 DEPS = gcov doxygen valgrind clang-format
 # Binaries to be built
-TARGETS = bst vector
+TARGETS = bst vector quadtree
 # Folders containing source code
 FOLDERS = ./ src/ src/map/ test/ src/lists
 
@@ -85,12 +85,13 @@ all: $(TARGETS)
 
 bst: test/bst.o src/map/bintree.o
 vector: test/vector.o src/lists/vector.o
+quadtree: test/quadtree.o src/map/quadtree.o src/lib/geometry.o src/lib/epsilon.o
 
 # ================================== TESTING ===================================
 
 .PHONY: *.report check test
 
-test:
+test: $(TARGETS)
 	@echo "Running tests..."
 	@for test in $(TARGETS); do \
 		echo "\n======================== Running $$test tests ========================\n"; \
