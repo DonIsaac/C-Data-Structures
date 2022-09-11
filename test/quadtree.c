@@ -140,10 +140,10 @@ mu_test(test_qt_insert_few) {
 
 mu_test(test_qt_insert_many) {
     unsigned int seed = 4294967291; // Largest 32-bit prime
-    uint32_t num_elements = 1000000; // Number of keys to insert. 1 million
+    uint32_t num_elements = 10000; // Number of keys to insert. 10k.
     QuadTree *tree = NULL;
     int status = 0; // return status
-    int data = 5;
+    int data = 5; // Data being inserted. All elements have the same data for simplicity
 
     qt_key_t *keys = malloc(sizeof(qt_key_t) * num_elements);
     if (keys == NULL) {
