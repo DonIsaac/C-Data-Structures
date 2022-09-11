@@ -265,5 +265,5 @@ int qt_has(QuadTree *tree, qt_key_t key) {
 
 map_status_t qt_remove(QuadTree *tree, qt_key_t key) {
     if (tree == NULL || tree->root == NULL) return _MAP_FAILURE;
-    return _qt_node_remove(tree->root, key);
+    return _qt_node_remove(&tree->root, key);
 }
