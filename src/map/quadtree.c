@@ -138,6 +138,7 @@ int _qt_node_has(qt_node *node, qt_key_t key) {
 }
 
 map_status_t _qt_node_remove(qt_node *node, qt_key_t key) {
+    // TODO: This function is not complete
     if (node == NULL) return _MAP_FAILURE;
 
     // Pick which quadrant the child should be in

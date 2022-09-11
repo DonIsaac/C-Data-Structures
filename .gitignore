@@ -6,6 +6,7 @@
 bst
 vector
 quadtree
+geometry
 
 # Temporary files
 *.tmp

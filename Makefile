@@ -33,8 +33,8 @@ LDLIBS =
 
 # Binaries used by various commands
 DEPS = gcov doxygen valgrind clang-format
-# Binaries to be built
-TARGETS = bst vector quadtree
+# Binaries to be built. These are all tests
+TARGETS = bst vector quadtree geometry
 # Folders containing source code
 FOLDERS = ./ src/ src/map/ test/ src/lists
 
@@ -95,6 +95,7 @@ all: $(TARGETS)
 bst: test/bst.o src/map/bintree.o
 vector: test/vector.o src/lists/vector.o
 quadtree: test/quadtree.o test/util.o src/map/quadtree.o $(addprefix src/lib/, geometry.o epsilon.o)
+geometry: test/geometry.o $(addprefix src/lib/, geometry.o epsilon.o)
 
 # ================================== TESTING ===================================
 
@@ -124,6 +125,9 @@ vector.report: vector
 	valgrind --leak-check=full ./vector
 	gcov --all-blocks --branch-counts test/vector.c src/lists/vector.c
 
+geometry.report: geometry
+	valgrind --leak-check=full ./geometry
+	gcov --all-blocks --branch-counts test/geometry.c src/lib/geometry.c src/lib/epsilon.c
 
 # ==================================== UTIL ====================================
 
