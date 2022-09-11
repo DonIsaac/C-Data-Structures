@@ -29,7 +29,7 @@ mu_test(test_geom_point_eq) {
     return MU_TEST_PASS;
 }
 
-mu_test(test_geom_point_distance) {
+mu_test(test_geom_point_dist) {
     mu_assert("Distance between (0, 0) and (0, 0) is 0", pointd_dist(zero, zero) == 0.0);
     mu_assert("Distance between (1, 1) and (1, 1) is 0", pointd_dist(one, one) == 0.0);
 
@@ -38,9 +38,19 @@ mu_test(test_geom_point_distance) {
     return MU_TEST_PASS;
 }
 
+mu_test(test_geom_point_distm) {
+    mu_assert("Manhattan distance between (0, 0) and (0, 0) is 0", pointd_distm(zero, zero) == 0.0);
+    mu_assert("Manhattan distance between (0, 0) and (1, 1) is 2", pointd_distm(zero, one) == 2.0);
+    mu_assert("Manhattan distance between (0, 0) and (-5, 0) is 5", pointd_distm(zero, (pointd_t){-5.0, 0.0}) == 5.0);
+    mu_assert("Mahattan distance between (0, 0) and (1, -1) is 2", pointd_distm(zero, (pointd_t){1.0, -1.0}) == 2.0);
+
+    return MU_TEST_PASS;
+}
+
 void all_tests() {
     mu_run_test(test_geom_point_eq);
-    mu_run_test(test_geom_point_distance);
+    mu_run_test(test_geom_point_dist);
+    mu_run_test(test_geom_point_distm);
 }
 
 int main() {

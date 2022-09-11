@@ -27,4 +27,17 @@ int pointd_eq(pointd_t a, pointd_t b);
  */
 double pointd_dist(pointd_t a, pointd_t b);
 
+/**
+ * @brief Calculates the Manhattan distance between two points.
+ *
+ * @details The Manhattan distance, also called the taxicab or city block
+ *          distance, is the sum of the absolute differences of their Cartesian
+ *          coordinates.
+ *
+ * @param a First point.
+ * @param b Second point.
+ *
+ * @return The Manhattan distance between the two points.
+ */
+double pointd_distm(pointd_t a, pointd_t b);
 #endif
