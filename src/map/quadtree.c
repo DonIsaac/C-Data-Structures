@@ -13,10 +13,10 @@
 #define SE 3
 
 typedef struct qt_node {
-    qt_key_t key;
-    void *data;
-    size_t size;
-    struct qt_node *children[NUM_CHILDREN];
+    qt_key_t key;                           /* The key used to identify the data */
+    void *data;                             /* A pointer to the data stored in the node */
+    size_t size;                            /* The size of the data stored in the node */
+    struct qt_node *children[NUM_CHILDREN]; /* The children of the node (NW, NE, SW, SE) */
 } qt_node;
 
 struct qt_quadtree {
@@ -50,7 +50,6 @@ map_status_t _qt_node_init(qt_node **node, qt_key_t key, void *data, size_t size
     (*node)->key = key;
     memcpy((*node)->data, data, size);
     (*node)->size = size;
-    (*node)->size = size;
 
     for (int i = 0; i < NUM_CHILDREN; i++) {
         (*node)->children[i] = NULL;
@@ -69,7 +68,7 @@ void _qt_node_free(qt_node *node) {
 }
 
 int _qt_node_size(qt_node *node) {
-    if (node == NULL) return 0;
+    if (node == NULL) return 0; // base case
 
     int size = 1;
     for (int i = 0; i < NUM_CHILDREN; i++) {
@@ -83,8 +82,9 @@ map_status_t _qt_node_add(qt_node *node, qt_key_t key, void *data, size_t size) 
     if (node == NULL) return _MAP_FAILURE;
 
     // If the key is already in the tree, replace the data
-    if (pointd_eq(node->key, key) == 0) {
+    if (pointd_eq(node->key, key)) {
         free(node->data);
+        // TODO: malloc and memcpy
         node->data = data;
         node->size = size;
         return _MAP_SUCCESS_REPLACED;
@@ -118,7 +118,7 @@ int _qt_node_has(qt_node *node, qt_key_t key) {
     if (node == NULL) return 0;
 
     // If the key is in the tree, return 1
-    if (pointd_eq(node->key, key) == 0) {
+    if (pointd_eq(node->key, key)) {
         return 1;
     }
 
@@ -135,7 +135,7 @@ map_status_t _qt_node_remove(qt_node *node, qt_key_t key) {
 
     // If the key is in the tree, remove it
     if (node->children[child] != NULL) {
-        if (pointd_eq(node->children[child]->key, key) == 0) {
+        if (pointd_eq(node->children[child]->key, key)) {
             _qt_node_free(node->children[child]);
             node->children[child] = NULL;
             return _MAP_SUCCESS;
@@ -188,7 +188,6 @@ int qt_height(QuadTree *tree) {
 }
 
 int qt_size(QuadTree *tree) {
-    // not implemented
     if (tree == NULL || tree->root == NULL) return 0;
 
     return _qt_node_size(tree->root);

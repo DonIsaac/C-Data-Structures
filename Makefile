@@ -94,7 +94,7 @@ all: $(TARGETS)
 
 bst: test/bst.o src/map/bintree.o
 vector: test/vector.o src/lists/vector.o
-quadtree: test/quadtree.o src/map/quadtree.o src/lib/geometry.o src/lib/epsilon.o
+quadtree: test/quadtree.o test/util.o src/map/quadtree.o $(addprefix src/lib/, geometry.o epsilon.o)
 
 # ================================== TESTING ===================================
 
