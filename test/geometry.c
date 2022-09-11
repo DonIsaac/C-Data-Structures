@@ -30,10 +30,10 @@ mu_test(test_geom_point_eq) {
 }
 
 mu_test(test_geom_point_distance) {
-    mu_assert("Distance between (0, 0) and (0, 0) is 0", pointd_distance(zero, zero) == 0.0);
-    mu_assert("Distance between (1, 1) and (1, 1) is 0", pointd_distance(one, one) == 0.0);
+    mu_assert("Distance between (0, 0) and (0, 0) is 0", pointd_dist(zero, zero) == 0.0);
+    mu_assert("Distance between (1, 1) and (1, 1) is 0", pointd_dist(one, one) == 0.0);
 
-    mu_assert("Distance between (0, 0) and (1, 1) is sqrt(2)", cmp_d(pointd_distance(zero, one), sqrt(2.0)) == 0);
+    mu_assert("Distance between (0, 0) and (1, 1) is sqrt(2)", cmp_d(pointd_dist(zero, one), sqrt(2.0)) == 0);
 
     return MU_TEST_PASS;
 }
