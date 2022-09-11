@@ -30,24 +30,48 @@ mu_test(test_qt_empty) {
     return MU_TEST_PASS;
 }
 
-mu_test(test_qt_simple_add) {
+mu_test(test_qt_add_one) {
     QuadTree *tree = NULL;
     map_status_t status;
+    qt_key_t key = {0.0, 0.0};
+    char data[MAX_STRLEN] = "Hello, world!\n";
 
     status = qt_init(&tree);
     mu_assert("QuadTree init should be successful", status == _MAP_SUCCESS);
     mu_assert("QuadTree should not be null after initialization", tree != NULL);
     mu_assert("QuadTree should have a size of 0 after initialization", qt_size(tree) == 0);
 
-    qt_key_t key = {0.0, 0.0};
-    char *data = "Hello, world!";
-    status = qt_add(tree, key, data, strlen(data));
+    status = qt_add(tree, key, data, strlen(data) + 1);
     mu_assert("QuadTree add should be successful", status == _MAP_SUCCESS);
     mu_assert("QuadTree should have a size of 1 after adding an element", qt_size(tree) == 1);
 
     char *result = qt_get(tree, key);
     mu_assert("qt_get should not return null when retrieving a stored key", result != NULL);
     mu_assert("qt_get should return the same data that was stored", strcmp(data, result) == 0);
+
+    qt_free(&tree);
+    return MU_TEST_PASS;
+}
+
+mu_test(test_qt_add_replace) {
+
+    QuadTree *tree = NULL;
+    qt_key_t key = {0.0, 0.0};
+    char data[MAX_STRLEN][2];
+
+    // Initialize data and tree
+    strcpy(data[0], "Initial Data");
+    strcpy(data[1], "Replacement Data");
+    mu_assert("QuadTree initialization failed", qt_init(&tree) == _MAP_SUCCESS);
+
+    // Add and replace data
+    mu_assert("QuadTree insertion failed", qt_add(tree, key, data[0], strlen(data[0]) + 1) == _MAP_SUCCESS);
+    mu_assert("QuadTree replacement failed", qt_add(tree, key, data[1], strlen(data[1]) + 1) == _MAP_SUCCESS_REPLACED);
+
+    // Check tree after replacement
+    mu_assert("QuadTree should have a size of 1 after adding an element", qt_size(tree) == 1);
+    mu_assert("qt_get should not return null when retrieving a stored key", qt_get(tree, key) != NULL);
+    mu_assert("qt_get should return the same data that was stored", strcmp(data[1], (char *)qt_get(tree, key)) == 0);
 
     qt_free(&tree);
     return MU_TEST_PASS;
@@ -86,7 +110,7 @@ mu_test(test_qt_insert_few) {
 
     qt_init(&tree);
     for (size_t i = 0; i < num_entries; i++) {
-        qt_add(tree, keys[i], data[i], strlen(data[i]));
+        qt_add(tree, keys[i], data[i], strlen(data[i]) + 1);
     }
 
     // Check tree size after insertion
@@ -199,7 +223,8 @@ mu_test(test_qt_insert_many) {
 
 void all_tests() {
     mu_run_test(test_qt_empty);
-    mu_run_test(test_qt_simple_add);
+    mu_run_test(test_qt_add_one);
+    mu_run_test(test_qt_add_replace);
     mu_run_test(test_qt_insert_few);
     mu_run_test(test_qt_insert_many);
 }

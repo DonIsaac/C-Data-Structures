@@ -38,19 +38,23 @@ int _qt_locate(qt_key_t key, qt_key_t point) {
 map_status_t _qt_node_init(qt_node **node, qt_key_t key, void *data, size_t size) {
     if (node == NULL) return _MAP_FAILURE;
 
+    // Allocate memory for the new node
     *node = malloc(sizeof(qt_node));
     if (*node == NULL) return _MAP_FAILURE;
 
+    // Allocate memory for the data
     (*node)->data = malloc(size);
     if ((*node)->data == NULL) {
         free(*node);
         return _MAP_FAILURE;
     }
 
+    // Copy over key, size, and data into the new node
     (*node)->key = key;
     memcpy((*node)->data, data, size);
     (*node)->size = size;
 
+    // Node is a leaf and has no children
     for (int i = 0; i < NUM_CHILDREN; i++) {
         (*node)->children[i] = NULL;
     }
@@ -65,6 +69,7 @@ void _qt_node_free(qt_node *node) {
     for (int i = 0; i < NUM_CHILDREN; i++) {
         _qt_node_free(node->children[i]);
     }
+    free(node);
 }
 
 int _qt_node_size(qt_node *node) {
@@ -83,10 +88,15 @@ map_status_t _qt_node_add(qt_node *node, qt_key_t key, void *data, size_t size) 
 
     // If the key is already in the tree, replace the data
     if (pointd_eq(node->key, key)) {
+        // Free the old data, al
         free(node->data);
-        // TODO: malloc and memcpy
-        node->data = data;
+        node->data = malloc(size);
+        if (node->data == NULL) return _MAP_FAILURE;
+
+        // Copy over new data and it's size
+        memcpy(node->data, data, size);
         node->size = size;
+
         return _MAP_SUCCESS_REPLACED;
     }
 
