@@ -73,7 +73,7 @@ void _qt_node_free(qt_node *node) {
 }
 
 int _qt_node_size(qt_node *node) {
-    if (node == NULL) return 0; // base case
+    if (node == NULL) return 0;  // base case
 
     int size = 1;
     for (int i = 0; i < NUM_CHILDREN; i++) {
@@ -137,25 +137,61 @@ int _qt_node_has(qt_node *node, qt_key_t key) {
     return _qt_node_has(node->children[child], key);
 }
 
-map_status_t _qt_node_remove(qt_node *node, qt_key_t key) {
+map_status_t _qt_node_remove(qt_node **node, qt_key_t key) {
     // TODO: This function is not complete
-    if (node == NULL) return _MAP_FAILURE;
+    if (node == NULL || *node == NULL) return _MAP_FAILURE;
 
-    // Pick which quadrant the child should be in
-    int child = _qt_locate(node->key, key);
+    qt_node *n = *node;
 
     // If the key is in the tree, remove it
-    if (node->children[child] != NULL) {
-        if (pointd_eq(node->children[child]->key, key)) {
-            _qt_node_free(node->children[child]);
-            node->children[child] = NULL;
-            return _MAP_SUCCESS;
-        } else {
-            return _qt_node_remove(node->children[child], key);
+    if (pointd_eq(n->key, key)) {
+        short int num_children = 0;
+        for (int i = 0; i < NUM_CHILDREN; i++) {
+            if (n->children[i] != NULL) num_children++;
+        }
+
+        switch (num_children) {
+            case 0:  // node is a leaf - just free it
+                free(n->data);
+                free(*node);
+                *node = NULL;
+
+                return _MAP_SUCCESS;
+
+            case 1: {  // node has 1 child, replace it with that child
+
+                // Find the child
+                qt_node *child = NULL;
+                for (short int i = 0; i < NUM_CHILDREN; i++) {
+                    if (n->children[i] != NULL) {
+                        child = n->children[i];
+                        break;
+                    }
+                }
+
+                // Free up this node's resources
+                free(n->data);
+                free(n);
+                // Replace this node with it's child
+                *node = child;
+
+                return _MAP_SUCCESS;
+            }
+
+            default:      // Find replacement candidate
+                exit(1);  // not implemented
         }
     }
 
-    return _MAP_FAILURE;
+    // Pick which quadrant the child should be in
+    int child = _qt_locate(n->key, key);
+
+    // If the key is in the tree, remove it
+    if (n->children[child] != NULL) {
+        return _qt_node_remove(&n->children[child], key);
+    } else {
+        return _MAP_SUCCESS;
+    }
 }
 
 // ================================= QUADTREE ==================================
