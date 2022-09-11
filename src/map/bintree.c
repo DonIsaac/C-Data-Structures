@@ -339,7 +339,7 @@ bt_node *_bt_min(bt_node *node) {
                 // Single child on the left
                 return _bt_min(node->left);
             } else {
-                // Single child on the right    
+                // Single child on the right
                 return node;
             }
         default:

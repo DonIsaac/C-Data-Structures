@@ -1,6 +1,8 @@
 #include "../src/lists/vector.h"
+
 #include <stdio.h>
 #include <string.h>
+
 #include "minunit.h"
 
 int tests_failed = 0;
@@ -103,4 +105,3 @@ int main() {
         return EXIT_FAILURE;
     }
 }
-

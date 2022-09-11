@@ -1,10 +1,10 @@
 #include "quadtree.h"
 
-#include "../lib/geometry.h"
-
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "../lib/geometry.h"
 
 #define NUM_CHILDREN 4
 #define NW 0
@@ -35,7 +35,7 @@ int _qt_locate(qt_key_t key, qt_key_t point) {
 
 // =================================== NODE ====================================
 
-map_status_t _qt_node_init (qt_node **node, qt_key_t key, void *data, size_t size) {
+map_status_t _qt_node_init(qt_node **node, qt_key_t key, void *data, size_t size) {
     if (node == NULL) return _MAP_FAILURE;
 
     *node = malloc(sizeof(qt_node));
@@ -181,7 +181,7 @@ void qt_free(QuadTree **tree) {
     *tree = NULL;
 }
 
-int qt_height(QuadTree *tree) { 
+int qt_height(QuadTree *tree) {
     // not implemented
     if (tree == NULL) return 0;
     return -1;
@@ -221,4 +221,3 @@ map_status_t qt_remove(QuadTree *tree, qt_key_t key) {
     if (tree == NULL || tree->root == NULL) return _MAP_FAILURE;
     return _qt_node_remove(tree->root, key);
 }
-

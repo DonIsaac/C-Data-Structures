@@ -1,8 +1,8 @@
-#include "minunit.h"
+#include "../src/map/quadtree.h"
 
 #include <string.h>
 
-#include "../src/map/quadtree.h"
+#include "minunit.h"
 
 int tests_failed = 0;
 int tests_run = 0;
@@ -17,13 +17,13 @@ mu_test(test_qt_simple_add) {
     mu_assert("QuadTree should not be null after initialization", tree != NULL);
     mu_assert("QuadTree should have a size of 0 after initialization", qt_size(tree) == 0);
 
-    qt_key_t key = { 0.0, 0.0 };
+    qt_key_t key = {0.0, 0.0};
     char *data = "Hello, world!";
     status = qt_add(tree, key, data, strlen(data));
     mu_assert("QuadTree add should be successful", status == _MAP_SUCCESS);
     mu_assert("QuadTree should have a size of 1 after adding an element", qt_size(tree) == 1);
 
-    char* result = qt_get(tree, key);
+    char *result = qt_get(tree, key);
     mu_assert("qt_get should not return null when retrieving a stored key", result != NULL);
     mu_assert("qt_get should return the same data that was stored", strcmp(data, result) == 0);
 
