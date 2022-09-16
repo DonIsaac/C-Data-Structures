@@ -8,7 +8,7 @@
 
 typedef struct qt_quadtree QuadTree;
 // typedef double qt_key_t[2];
-typedef pointd_t qt_key_t;
+typedef point_t qt_key_t;
 
 /**
  * @brief Constructs a new QuadTree.

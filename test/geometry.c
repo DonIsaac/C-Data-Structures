@@ -9,40 +9,40 @@ int tests_failed = 0;
 int tests_run = 0;
 int num_assertions = 0;
 
-pointd_t zero = {0.0, 0.0};
-pointd_t one = {1.0, 1.0};
+point_t zero = {0.0, 0.0};
+point_t one = {1.0, 1.0};
 
 mu_test(test_geom_point_eq) {
-    pointd_t p1 = {5.24, 3.14};
-    pointd_t p2 = {5.24, 3.14};
+    point_t p1 = {5.24, 3.14};
+    point_t p2 = {5.24, 3.14};
 
     // Check equal
-    mu_assert("(0, 0) == (0, 0)", pointd_eq(zero, zero));
-    mu_assert("(1, 1) == (1, 1)", pointd_eq(one, one));
-    mu_assert("(5.24, 3.14) == (5.24, 3.14)",  pointd_eq(p1, p2));
+    mu_assert("(0, 0) == (0, 0)", point_eq(zero, zero));
+    mu_assert("(1, 1) == (1, 1)", point_eq(one, one));
+    mu_assert("(5.24, 3.14) == (5.24, 3.14)",  point_eq(p1, p2));
 
     // Check not equal
-    mu_assert("(0, 0) != (1, 1)", !pointd_eq(zero, one));
-    mu_assert("(1, 1) != (0, 0)", !pointd_eq(one, zero));
-    mu_assert("(5.24, 3.14) != (0, 0)", !pointd_eq(p1, zero));
+    mu_assert("(0, 0) != (1, 1)", !point_eq(zero, one));
+    mu_assert("(1, 1) != (0, 0)", !point_eq(one, zero));
+    mu_assert("(5.24, 3.14) != (0, 0)", !point_eq(p1, zero));
 
     return MU_TEST_PASS;
 }
 
 mu_test(test_geom_point_dist) {
-    mu_assert("Distance between (0, 0) and (0, 0) is 0", pointd_dist(zero, zero) == 0.0);
-    mu_assert("Distance between (1, 1) and (1, 1) is 0", pointd_dist(one, one) == 0.0);
+    mu_assert("Distance between (0, 0) and (0, 0) is 0", point_dist(zero, zero) == 0.0);
+    mu_assert("Distance between (1, 1) and (1, 1) is 0", point_dist(one, one) == 0.0);
 
-    mu_assert("Distance between (0, 0) and (1, 1) is sqrt(2)", cmp_d(pointd_dist(zero, one), sqrt(2.0)) == 0);
+    mu_assert("Distance between (0, 0) and (1, 1) is sqrt(2)", cmp_d(point_dist(zero, one), sqrt(2.0)) == 0);
 
     return MU_TEST_PASS;
 }
 
 mu_test(test_geom_point_distm) {
-    mu_assert("Manhattan distance between (0, 0) and (0, 0) is 0", pointd_distm(zero, zero) == 0.0);
-    mu_assert("Manhattan distance between (0, 0) and (1, 1) is 2", pointd_distm(zero, one) == 2.0);
-    mu_assert("Manhattan distance between (0, 0) and (-5, 0) is 5", pointd_distm(zero, (pointd_t){-5.0, 0.0}) == 5.0);
-    mu_assert("Mahattan distance between (0, 0) and (1, -1) is 2", pointd_distm(zero, (pointd_t){1.0, -1.0}) == 2.0);
+    mu_assert("Manhattan distance between (0, 0) and (0, 0) is 0", point_distm(zero, zero) == 0.0);
+    mu_assert("Manhattan distance between (0, 0) and (1, 1) is 2", point_distm(zero, one) == 2.0);
+    mu_assert("Manhattan distance between (0, 0) and (-5, 0) is 5", point_distm(zero, (point_t){-5.0, 0.0}) == 5.0);
+    mu_assert("Mahattan distance between (0, 0) and (1, -1) is 2", point_distm(zero, (point_t){1.0, -1.0}) == 2.0);
 
     return MU_TEST_PASS;
 }

@@ -2,10 +2,10 @@
 #define __POINT_H__
 
 // typedef double pointd_t[2];
-typedef struct pointd {
+typedef struct point {
     double x;
     double y;
-} pointd_t;
+} point_t;
 
 /**
  * @brief Checks if two points are equal.
@@ -15,7 +15,7 @@ typedef struct pointd {
  *
  * @return 1 if the points are equal, 0 otherwise.
  */
-int pointd_eq(pointd_t a, pointd_t b);
+int point_eq(point_t a, point_t b);
 
 /**
  * @brief Calculates the euclidean distance between two points.
@@ -25,7 +25,7 @@ int pointd_eq(pointd_t a, pointd_t b);
  *
  * @return The euclidean distance between the two points.
  */
-double pointd_dist(pointd_t a, pointd_t b);
+double point_dist(point_t a, point_t b);
 
 /**
  * @brief Calculates the Manhattan distance between two points.
@@ -39,5 +39,5 @@ double pointd_dist(pointd_t a, pointd_t b);
  *
  * @return The Manhattan distance between the two points.
  */
-double pointd_distm(pointd_t a, pointd_t b);
+double point_distm(point_t a, point_t b);
 #endif

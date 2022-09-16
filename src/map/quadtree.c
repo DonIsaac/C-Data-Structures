@@ -87,7 +87,7 @@ map_status_t _qt_node_add(qt_node *node, qt_key_t key, void *data, size_t size) 
     if (node == NULL) return _MAP_FAILURE;
 
     // If the key is already in the tree, replace the data
-    if (pointd_eq(node->key, key)) {
+    if (point_eq(node->key, key)) {
         // Free the old data, al
         free(node->data);
         node->data = malloc(size);
@@ -115,7 +115,7 @@ void *_qt_node_get(qt_node *node, qt_key_t key) {
     if (node == NULL) return NULL;
 
     // If the key is in the tree, return the data
-    if (pointd_eq(node->key, key)) {
+    if (point_eq(node->key, key)) {
         return node->data;
     }
 
@@ -128,7 +128,7 @@ int _qt_node_has(qt_node *node, qt_key_t key) {
     if (node == NULL) return 0;
 
     // If the key is in the tree, return 1
-    if (pointd_eq(node->key, key)) {
+    if (point_eq(node->key, key)) {
         return 1;
     }
 
@@ -144,7 +144,7 @@ map_status_t _qt_node_remove(qt_node **node, qt_key_t key) {
     qt_node *n = *node;
 
     // If the key is in the tree, remove it
-    if (pointd_eq(n->key, key)) {
+    if (point_eq(n->key, key)) {
         short int num_children = 0;
         for (int i = 0; i < NUM_CHILDREN; i++) {
             if (n->children[i] != NULL) num_children++;
