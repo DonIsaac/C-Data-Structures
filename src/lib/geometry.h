@@ -15,7 +15,7 @@ typedef struct point {
  *
  * @return 1 if the points are equal, 0 otherwise.
  */
-int point_eq(point_t a, point_t b);
+int point_eq(const point_t a, const point_t b);
 
 /**
  * @brief Calculates the euclidean distance between two points.
@@ -25,7 +25,7 @@ int point_eq(point_t a, point_t b);
  *
  * @return The euclidean distance between the two points.
  */
-double point_dist(point_t a, point_t b);
+double point_dist(const point_t a, const point_t b);
 
 /**
  * @brief Calculates the Manhattan distance between two points.
@@ -39,5 +39,5 @@ double point_dist(point_t a, point_t b);
  *
  * @return The Manhattan distance between the two points.
  */
-double point_distm(point_t a, point_t b);
+double point_distm(const point_t a, const point_t b);
 #endif

@@ -24,7 +24,7 @@ float epsilon_f() {
     return epsilon;
 }
 
-int cmp_d(double a, double b) {
+int cmp_d(const double a, const double b) {
     double epsilon = epsilon_d();
     double diff = a - b;
     return (diff < -epsilon)
@@ -33,7 +33,7 @@ int cmp_d(double a, double b) {
                               : 0;
 }
 
-int cmp_f(float a, float b) {
+int cmp_f(const float a, const float b) {
     float epsilon = epsilon_f();
     float diff = a - b;
     return (diff < -epsilon)

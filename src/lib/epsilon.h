@@ -13,7 +13,7 @@ float epsilon_f();
  * @return int `-1` if `a < b`, `0` if `a == b`, `1` if `a > b`.
  *
  */
-int cmp_d(double a, double b);
+int cmp_d(const double a, const double b);
 
 /**
  * @brief Compares two floats for equality.
@@ -24,6 +24,6 @@ int cmp_d(double a, double b);
  * @return int `-1` if `a < b`, `0` if `a == b`, `1` if `a > b`.
  *
  */
-int cmp_f(float a, float b);
+int cmp_f(const float a, const float b);
 
 #endif
