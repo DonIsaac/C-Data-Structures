@@ -47,14 +47,34 @@ mu_test(test_geom_point_distm) {
     return MU_TEST_PASS;
 }
 
+mu_test(test_geom_rect_contains) {
+    rect_t rect = {
+        { -1, 1 },
+        { -1, 1 }
+    };
+    
+    // Includes
+    mu_assert("Rect should contain points at it's center", rect_contains(&rect, zero));
+    mu_assert("Rect should contain points on it's top right corner", rect_contains(&rect, (point_t){ 1.0, 1.0 }));
+    mu_assert("Rect should contain points on it's bottom left corner", rect_contains(&rect, (point_t){ -1.0, -1.0 }));
+
+    // Doesn't include
+    mu_assert("Rect shouldn't contain points too far to the left", !rect_contains(&rect, (point_t){ -5.0, 0.0 }));
+    mu_assert("Rect shouldn't contain points too far to the right", !rect_contains(&rect, (point_t){ 5.0, 0.0 }));
+    mu_assert("Rect shouldn't contain points too far above", !rect_contains(&rect, (point_t){ 0.0, 5.0 }));
+    mu_assert("Rect shouldn't contain points too far below", !rect_contains(&rect, (point_t){ 0.0, -5.0 }));
+
+    return MU_TEST_PASS;
+}
+
 void all_tests() {
     mu_run_test(test_geom_point_eq);
     mu_run_test(test_geom_point_dist);
     mu_run_test(test_geom_point_distm);
+    mu_run_test(test_geom_rect_contains);
 }
 
 int main() {
-    // struct mu_res *result = all_tests();
     all_tests();
 
     printf("\nTests run: %d\nTests failed: %d\nTotal assertions: %d\n\n", tests_run, tests_failed, num_assertions);

@@ -1,6 +1,8 @@
 #ifndef __POINT_H__
 #define __POINT_H__
 
+#include <stdbool.h>
+
 // typedef double pointd_t[2];
 typedef struct point {
     double x;
@@ -8,14 +10,25 @@ typedef struct point {
 } point_t;
 
 /**
+ * @brief A 2-D rectangle.
+ * 
+ */
+typedef struct rect {
+    /** min/max values along the X axis. */
+    double x[2];
+    /** min/max values along the Y axis. */
+    double y[2];
+} rect_t;
+
+/**
  * @brief Checks if two points are equal.
  *
  * @param a First point.
  * @param b Second point.
  *
- * @return 1 if the points are equal, 0 otherwise.
+ * @return `true` if the points are equal, `false` otherwise.
  */
-int point_eq(const point_t a, const point_t b);
+bool point_eq(const point_t a, const point_t b);
 
 /**
  * @brief Calculates the euclidean distance between two points.
@@ -40,4 +53,6 @@ double point_dist(const point_t a, const point_t b);
  * @return The Manhattan distance between the two points.
  */
 double point_distm(const point_t a, const point_t b);
+
+bool rect_contains(const rect_t *const rect, const point_t point);
 #endif
