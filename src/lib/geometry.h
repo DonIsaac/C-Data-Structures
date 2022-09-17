@@ -3,7 +3,10 @@
 
 #include <stdbool.h>
 
-// typedef double pointd_t[2];
+/**
+ * @brief A 2-D point.
+ * 
+ */
 typedef struct point {
     double x;
     double y;
@@ -54,5 +57,14 @@ double point_dist(const point_t a, const point_t b);
  */
 double point_distm(const point_t a, const point_t b);
 
+/**
+ * @brief Checks if a point lies within a rectangle.
+ * 
+ * @param rect The rectangle
+ * @param point The point
+ * 
+ * @return true if `point` lies within or on the edge of `rect`
+ * @return false otherwise
+ */
 bool rect_contains(const rect_t *const rect, const point_t point);
 #endif

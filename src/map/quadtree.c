@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "../lib/geometry.h"
 
@@ -13,9 +14,10 @@
 #define SE 3
 
 typedef struct qt_node {
-    qt_key_t key;                           /* The key used to identify the data */
     void *data;                             /* A pointer to the data stored in the node */
     size_t size;                            /* The size of the data stored in the node */
+    qt_key_t key;                           /* The key used to identify the data */
+    bool is_deleted;                        /* Whether this node is marked as deleted */
     struct qt_node *children[NUM_CHILDREN]; /* The children of the node (NW, NE, SW, SE) */
 } qt_node;
 
@@ -49,7 +51,8 @@ map_status_t _qt_node_init(qt_node **node, qt_key_t key, void *data, size_t size
         return _MAP_FAILURE;
     }
 
-    // Copy over key, size, and data into the new node
+    // Initialize the node's properties, copying over the data
+    (*node)->is_deleted = false;
     (*node)->key = key;
     memcpy((*node)->data, data, size);
     (*node)->size = size;
@@ -72,10 +75,10 @@ void _qt_node_free(qt_node *node) {
     free(node);
 }
 
-int _qt_node_size(qt_node *node) {
+size_t _qt_node_size(qt_node *node) {
     if (node == NULL) return 0;  // base case
 
-    int size = 1;
+    size_t size = node->is_deleted ? 0 : 1;
     for (int i = 0; i < NUM_CHILDREN; i++) {
         size += _qt_node_size(node->children[i]);
     }
@@ -97,6 +100,11 @@ map_status_t _qt_node_add(qt_node *node, qt_key_t key, void *data, size_t size) 
         memcpy(node->data, data, size);
         node->size = size;
 
+        // Only return replaced status if the node wasn't deleted
+        map_status_t is_replaced = node->is_deleted ? _MAP_SUCCESS : _MAP_SUCCESS_REPLACED;
+
+        // Node might have been deleted, make sure it's marked as present
+        node->is_deleted = false;
         return _MAP_SUCCESS_REPLACED;
     }
 
@@ -116,7 +124,8 @@ void *_qt_node_get(qt_node *node, qt_key_t key) {
 
     // If the key is in the tree, return the data
     if (point_eq(node->key, key)) {
-        return node->data;
+        // Return null if node was deleted as removed entries cannot be returned
+        return node->is_deleted ? NULL : node->data;
     }
 
     // Pick which quadrant the child should be in, then recurse
@@ -124,12 +133,12 @@ void *_qt_node_get(qt_node *node, qt_key_t key) {
     return _qt_node_get(node->children[child], key);
 }
 
-int _qt_node_has(qt_node *node, qt_key_t key) {
-    if (node == NULL) return 0;
+bool _qt_node_has(qt_node *node, qt_key_t key) {
+    if (node == NULL) return false;
 
-    // If the key is in the tree, return 1
+    // If the key is in the tree and it hasn't been deleted, return true
     if (point_eq(node->key, key)) {
-        return 1;
+        return !node->is_deleted;
     }
 
     // Pick which quadrant the child should be in, then recurse
@@ -178,8 +187,9 @@ map_status_t _qt_node_remove(qt_node **node, qt_key_t key) {
                 return _MAP_SUCCESS;
             }
 
-            default:      // Find replacement candidate
-                exit(1);  // not implemented
+            default: // mark the node as deleted. Memory is freed during sweep.
+                n->is_deleted = true;
+                return _MAP_SUCCESS;
         }
     }
 
@@ -234,7 +244,7 @@ int qt_height(QuadTree *tree) {
     return -1;
 }
 
-int qt_size(QuadTree *tree) {
+size_t qt_size(QuadTree *tree) {
     if (tree == NULL || tree->root == NULL) return 0;
 
     return _qt_node_size(tree->root);

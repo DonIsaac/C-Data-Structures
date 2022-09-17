@@ -7,7 +7,6 @@
 #include "map.h"
 
 typedef struct qt_quadtree QuadTree;
-// typedef double qt_key_t[2];
 typedef point_t qt_key_t;
 
 /**
@@ -24,7 +23,10 @@ void qt_free(QuadTree **tree);
 
 int qt_height(QuadTree *tree);
 
-int qt_size(QuadTree *tree);
+/**
+ * @brief Gets the number of entries in the QuadTree.
+ */
+size_t qt_size(QuadTree *tree);
 
 map_status_t qt_add(QuadTree *tree, qt_key_t key, void *data, size_t size);
 

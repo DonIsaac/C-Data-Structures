@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['free_5felement',['free_element',['../struct__vector.html#a65d764a67affe03e5592d59107b26539',1,'_vector']]]
+  ['capacity_0',['capacity',['../struct__vector.html#ae94ed30bb873733d4a362a6e9bf7156c',1,'_vector']]]
 ];
