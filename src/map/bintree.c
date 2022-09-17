@@ -21,7 +21,16 @@ struct bt_bintree {
 
 // =============================== PRIVATE UTILS ===============================
 
+/**
+ * @brief Get node with the smallest key value in a subtree.
+ * @return Pointer to node with the smallest key in the provided subtree.
+ */
 bt_node *_bt_min(bt_node *node);
+
+/**
+ * @brief Get node with the largest key value in a subtree.
+ * @return Pointer to the node with the largest key in the provided subtree.
+ */
 bt_node *_bt_max(bt_node *node);
 
 int _bt_num_children(bt_node *node) {
@@ -41,13 +50,14 @@ int _bt_num_children(bt_node *node) {
     else
         return 2;
 }
+
 bool _bt_node_is_leaf(bt_node *node) {
     return _bt_num_children(node) == 0;
 }
 
 // =============================== INIT/DESTROY  =================================
 
-int _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
+map_status_t _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
     bt_node *n = NULL;
     size_t keylen = 0;
 
@@ -77,7 +87,7 @@ int _bt_node_init(bt_node **node, char *key, void *data, size_t size) {
     return _MAP_SUCCESS;
 }
 
-int bt_init(BinTree **tree) {
+map_status_t bt_init(BinTree **tree) {
     BinTree *t = NULL;
 
     if (!tree) return _MAP_FAILURE;
@@ -154,7 +164,7 @@ int bt_size(BinTree *tree) {
 
 // ================================= INSERTION =================================
 
-int _bt_add(bt_node *node, char *key, void *data, size_t size) {
+map_status_t _bt_add(bt_node *node, char *key, void *data, size_t size) {
     int cmp;  // Comparison between node key and target key
 
     // Check params
@@ -193,7 +203,7 @@ int _bt_add(bt_node *node, char *key, void *data, size_t size) {
     }
 }
 
-int bt_add(BinTree *tree, char *key, void *data, size_t size) {
+map_status_t bt_add(BinTree *tree, char *key, void *data, size_t size) {
     if (!tree || !key || !data) return _MAP_FAILURE;
 
     // Tree is empty, create a new root node
@@ -305,7 +315,7 @@ bt_node *_bt_remove(bt_node *node, char *key, int *status) {
     }
 }
 
-int bt_remove(BinTree *tree, char *key) {
+map_status_t bt_remove(BinTree *tree, char *key) {
     int status = _MAP_FAILURE;
 
     if (!tree || !key) return _MAP_FAILURE;
@@ -321,15 +331,19 @@ bt_node *_bt_min(bt_node *node) {
     if (!node) return NULL;
 
     switch (_bt_num_children(node)) {
+        // Leaf node
         case 0:
             return node;
         case 1:
             if (node->left) {
+                // Single child on the left
                 return _bt_min(node->left);
             } else {
+                // Single child on the right
                 return node;
             }
         default:
+            // Two children
             return _bt_min(node->left);
     }
 }

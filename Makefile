@@ -8,14 +8,18 @@ CPP = g++
 # Linux
 LINUX_CFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c99 # LDLIBS=-lstdc++
 LINUX_CXXFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c++17 # LDLIBS=-lstdc++
-LINUX_DEBUGFLAGS = -DDEBUG -ggdb -fprofile-arcs -ftest-coverage
+LINUX_LDLIBS = -lm
 LINUX_PRODFLAGS = -02 -DNDEBUG
+LINUX_DEBUGFLAGS = -DDEBUG -ggdb -fprofile-arcs -ftest-coverage
+LINUX_DEBUG_LDLIBS = -lgcov --coverage
 
 # MacOS
 MACOS_CFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c99
 MACOS_CXXFLAGS = -Wall -Wextra -Wconversion -pedantic -Werror -Iincludes -std=c++17
-MACOS_DEBUGFLAGS = -DDEBUG -g 
+MACOS_LDLIBS =
 MACOS_PRODFLAGS = -02 -DNDEBUG
+MACOS_DEBUGFLAGS = -DDEBUG -g 
+MACOS_DEBUG_LDLIBS =
 
 # Windows
 # todo
@@ -29,8 +33,8 @@ LDLIBS =
 
 # Binaries used by various commands
 DEPS = gcov doxygen valgrind clang-format
-# Binaries to be built
-TARGETS = bst vector
+# Binaries to be built. These are all tests
+TARGETS = bst vector quadtree geometry
 # Folders containing source code
 FOLDERS = ./ src/ src/map/ test/ src/lists
 
@@ -56,13 +60,18 @@ else
 	ifeq ($(UNAME_S),Linux)
 		CFLAGS += $(LINUX_CFLAGS)
 		CXXFLAGS += $(LINUX_CXXFLAGS)
-		DEBUGFLAGS += $(LINUX_DEBUGFLAGS)
+		LDLIBS += $(LINUX_LDLIBS)
 		PRODFLAGS += $(LINUX_PRODFLAGS)
+		DEBUGFLAGS += $(LINUX_DEBUGFLAGS)
+		DEBUG_LDLIBS += $(LINUX_DEBUG_LDLIBS)
 	else
 		CFLAGS += $(MACOS_CFLAGS)
 		CXXFLAGS += $(MACOS_CXXFLAGS)
-		DEBUGFLAGS += $(MACOS_DEBUGFLAGS)
+		LDLIBS += $(MACOS_LDLIBS)
 		PRODFLAGS += $(MACOS_PRODFLAGS)
+		DEBUGFLAGS += $(MACOS_DEBUGFLAGS)
+		DEBUG_LDFLAGS += $(MACOS_DEBUG_LDFLAGS)
+
 	endif
 endif
 
@@ -70,7 +79,7 @@ endif
 ifdef DEBUG
 	CFLAGS += $(DEBUGFLAGS)
 	CXXFLAGS += $(DEBUGFLAGS)
-	LDLIBS += -lgcov --coverage
+	LDLIBS += $(DEBUG_LDLIBS)
 
 # Disable assert macro and optimize output
 else ifdef PROD
@@ -85,12 +94,14 @@ all: $(TARGETS)
 
 bst: test/bst.o src/map/bintree.o
 vector: test/vector.o src/lists/vector.o
+quadtree: test/quadtree.o test/util.o src/map/quadtree.o $(addprefix src/lib/, geometry.o epsilon.o)
+geometry: test/geometry.o $(addprefix src/lib/, geometry.o epsilon.o)
 
 # ================================== TESTING ===================================
 
 .PHONY: *.report check test
 
-test:
+test: $(TARGETS)
 	@echo "Running tests..."
 	@for test in $(TARGETS); do \
 		echo "\n======================== Running $$test tests ========================\n"; \
@@ -103,6 +114,10 @@ bst.report: bst
 	valgrind --leak-check=full ./bst
 	gcov --all-blocks --branch-counts test/bst.c src/map/bintree.c
 
+quadtree.report: quadtree
+	valgrind --leak-check=full ./quadtree
+	gcov --all-blocks --branch-counts test/quadtree.c src/map/quadtree.c
+
 # %.report: %
 # 	gcov test/$<.c
 
@@ -110,6 +125,9 @@ vector.report: vector
 	valgrind --leak-check=full ./vector
 	gcov --all-blocks --branch-counts test/vector.c src/lists/vector.c
 
+geometry.report: geometry
+	valgrind --leak-check=full ./geometry
+	gcov --all-blocks --branch-counts test/geometry.c src/lib/geometry.c src/lib/epsilon.c
 
 # ==================================== UTIL ====================================
 
